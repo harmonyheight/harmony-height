@@ -1,7 +1,9 @@
+"use client"
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const NavBar = () => {
+    const [activeTab, setActiveTab] = useState("Home");
     return (<div className="navbar bg-base-100 shadow-sm rounded-sm fixed">
         <div className="navbar-start">
             <div className="dropdown">
@@ -9,34 +11,35 @@ const NavBar = () => {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                 </label>
                 <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><Link href="/">Home</Link></li>
+                    <li className={`${activeTab == "Home" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Home")}><Link href="/">Home</Link></li>
                     <li>
                         <a>Category</a>
                         <ul className="p-2">
-                            <li><Link href="/login">Buy</Link></li>
-                            <li><Link href="/login">Sell</Link></li>
-                            <li><Link href="/login">Rent</Link></li>
+                            <li className={`${activeTab == "Buy" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Buy")}><Link href="/">Buy</Link></li>
+                            <li className={`${activeTab == "Sell" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Sell")}><Link href="/">Sell</Link></li>
+                            <li className={`${activeTab == "Rent" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Rent")}><Link href="/">Rent</Link></li>
                         </ul>
                     </li>
-                    <li><Link href="/login">Contact Us</Link></li>
+                    <li className={`${activeTab == "Contact" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Contact")}><Link href="/">Contact Us</Link></li>
                 </ul>
             </div>
             <a className="btn btn-ghost normal-case text-xl">Harmony Height</a>
         </div>
         <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">
-                <li><Link href="/">Home</Link></li>
+                <li className={`${activeTab == "Home" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Home")}><Link href="/">Home</Link></li>
                 <li tabIndex={0}>
                     <details>
+                        {/* <summary className={`${("BuySellRent".includes(activeTab)) ? "bg-warning" : ""}`}>Category</summary> */}
                         <summary>Category</summary>
                         <ul className="p-4">
-                            <li><Link href="/login">Buy</Link></li>
-                            <li><Link href="/login">Sell</Link></li>
-                            <li><Link href="/login">Rent</Link></li>
+                            <li className={`${activeTab == "Buy" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Buy")}><Link href="/">Buy</Link></li>
+                            <li className={`${activeTab == "Sell" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Sell")}><Link href="/">Sell</Link></li>
+                            <li className={`${activeTab == "Rent" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Rent")}><Link href="/">Rent</Link></li>
                         </ul>
                     </details>
                 </li>
-                <li><a>Contact Us</a></li>
+                <li className={`${activeTab == "Contact" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Contact")}><Link href="/">Contact Us</Link></li>
             </ul>
         </div>
         <div className="navbar-end">
@@ -58,7 +61,7 @@ const NavBar = () => {
                 </ul>
             </div>
         </div>
-    </div>
+    </div >
     );
 };
 
