@@ -9,11 +9,11 @@ exports.login = async (req, res) => {
     const customer = await Customer.findOne({ email });
 
     if (!customer) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: 'Unauthorized access' });
     }
     const isPasswordCorrect = await bcrypt.compare(password, customer.password);
     if (!isPasswordCorrect) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: 'Unauthorized access' });
     }
     const token = jwt.sign(
       {
