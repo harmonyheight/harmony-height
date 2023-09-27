@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -15,6 +15,31 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
-}
-export default config
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: '#F6D200',
+
+          secondary: '#FC8C78',
+
+          accent: '#B2AB99',
+
+          neutral: '#00DCBC',
+
+          'base-100': '#ffff',
+
+          info: '#618cdb',
+
+          success: '#00E1A6',
+
+          warning: '#f3cb1b',
+
+          error: '#e84f6e',
+        },
+      },
+    ],
+  },
+  plugins: [require('@tailwindcss/typography'), require('daisyui')],
+};
+export default config;
