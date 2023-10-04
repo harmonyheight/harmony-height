@@ -29,15 +29,7 @@ const LoginPage = () => {
         });
     };
     return (
-        <div className="flex min-w-full items-center justify-center flex-col">
-            <div className="min-w-full btn-primary h-14 mb-12 items-center justify-start flex">
-                <h1 className="pl-5 text-center font-bold text-lg">HARMONY HEIGHT</h1>
-            </div>
-            <div className="avatar">
-                <div className="w-28 rounded-full mb-5">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx72h5u9ci20lUy6l9gY1hrHnEDXcUIrCUvg&usqp=CAU" />
-                </div>
-            </div>
+        <div className="flex min-w-full items-center justify-center flex-col h-screen">
             <div className="card w-96 bg-base-100 shadow-xl">
                 <form onSubmit={handleSubmit(onSubmit)}>
 
