@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
     // Authentication successful
     res
       .status(200)
-      .json({ message: 'Login successful', token, ...customer._doc });
+      .json({ message: 'Login successful', token, user: customer._doc });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
