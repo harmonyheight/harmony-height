@@ -1,12 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
+import { useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { BsBuildings, BsBuildingAdd } from 'react-icons/bs'
 const TabSection = () => {
     const [tab, setTab] = useState("sell");
     const { push } = useRouter();
-
+    const { user } = useAppSelector(state => state.auth);
+    const handleListNavigate = () => {
+        user ? push('/profile') : push('/login')
+    }
     return (
         <div className="flex justify-evenly items-center bg-lime-50 flex-col rounded-md py-20 h-screen">
             <div className="lg:text-6xl font-extrabold pb-16 md:text-5xl sm:text-4xl">Be a Real Estate Know-It-All</div>
@@ -30,7 +34,7 @@ const TabSection = () => {
                         <div className="flex justify-evenly items-center h-[90%] flex-col ">
                             <BsBuildingAdd className="text-2xl" />
                             <p className="text-base sm:text-sm uppercase font-bold">Do you want to sell your property?</p>
-                            <button className="btn btn-primary mt-4" onClick={() => push("/register")}>LIST PROPERTY</button>
+                            <button className="btn btn-primary mt-4" onClick={handleListNavigate}>LIST PROPERTY</button>
                         </div>
                     }
                     {

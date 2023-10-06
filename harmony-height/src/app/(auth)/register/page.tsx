@@ -61,7 +61,7 @@ const RegisterPage = () => {
                         <div className="card-actions justify-start">
                             <button className="btn btn-primary mt-4" type="submit">Register</button>
                         </div>
-                        <text className="text-blue-800 cursor-pointer pt-3" onClick={handleLoginPageNavigate}>Already have an account? Login</text>
+                        <div className="text-blue-800 cursor-pointer pt-3" onClick={handleLoginPageNavigate}>Already have an account? Login</div>
                     </div>
                 </form>
             </div>

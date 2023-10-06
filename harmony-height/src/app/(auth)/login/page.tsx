@@ -56,7 +56,7 @@ const LoginPage = () => {
                             <button className="btn btn-primary mt-4" type="submit">Login</button>
                         </div>
 
-                        <text className="text-blue-800 cursor-pointer pt-3" onClick={handleRegisterPageNavigate}>Don't have account? Register</text>
+                        <div className="text-blue-800 cursor-pointer pt-3" onClick={handleRegisterPageNavigate}>Don't have account? Register</div>
                     </div>
                 </form>
             </div>
