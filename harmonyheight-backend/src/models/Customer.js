@@ -24,6 +24,10 @@ const customerSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  isAdmin: {
+    type: String,
+    default: false,
+  },
   password: {
     type: String,
     required: true,

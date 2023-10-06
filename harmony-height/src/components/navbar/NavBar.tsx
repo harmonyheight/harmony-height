@@ -1,9 +1,19 @@
 "use client"
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { logout } from "@/store/reducers/userAuthSlice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const NavBar = ({ children }: { children: React.ReactNode }) => {
     const [activeTab, setActiveTab] = useState("Home");
+    const { push } = useRouter();
+    const { user } = useAppSelector(state => state.auth);
+    const dispatch = useAppDispatch();
+    const handleLogout = () => {
+        dispatch(logout());
+        push("/login")
+    }
     return (
         <div>
             <div className="navbar bg-base-100 shadow-sm rounded-sm">
@@ -45,23 +55,29 @@ const NavBar = ({ children }: { children: React.ReactNode }) => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                                <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250" />
-                            </div>
-                        </label>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                            <li>
-                                <Link href="/profile" className="justify-between">
-                                    Profile
-                                    <span className="badge">New</span>
-                                </Link>
-                            </li>
-                            <li><Link href="/settings">Settings</Link></li>
-                            <li><Link href="/login">Logout</Link></li>
-                        </ul>
-                    </div>
+                    {
+                        user ? <div className="dropdown dropdown-end">
+                            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    <div className="avatar placeholder">
+                                        <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
+                                            <span className="text-base uppercase">{user.name[0]}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                                <li>
+                                    <Link href="/profile" className="justify-between">
+                                        Profile
+                                        <span className="badge">New</span>
+                                    </Link>
+                                </li>
+                                <li><Link href="/settings">Settings</Link></li>
+                                <li className="pl-3 cursor-pointer" onClick={handleLogout}>Logout</li>
+                            </ul>
+                        </div> : <div className="text-blue-600 pr-6 cursor-pointer" onClick={() => push('/login')}>LOGIN</div>
+                    }
                 </div>
             </div>
             {children}

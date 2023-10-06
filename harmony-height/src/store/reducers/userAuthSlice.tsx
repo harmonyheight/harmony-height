@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import { UserAuthState, User } from "@/schema/types/userAuth/userAuth";
-import { userLoginAsync } from "../thunks/userAuthThunk";
+import { userLoginAsync, userRegisterAsync } from "../thunks/userAuthThunk";
 
 const initialState: UserAuthState = {
     user: null,
@@ -30,6 +30,19 @@ const userAuthSlice = createSlice({
                 state.error = null,
                 state.user = action.payload?.user
         }).addCase(userLoginAsync.rejected, (state, action: any) => {
+            state.loading = false,
+                state.user = null,
+                state.error = action.payload
+        })
+        builder.addCase(userRegisterAsync.pending, (state) => {
+            state.loading = true;
+            state.error = null
+        })
+        builder.addCase(userRegisterAsync.fulfilled, (state, action) => {
+            state.loading = false,
+                state.error = null,
+                state.user = null
+        }).addCase(userRegisterAsync.rejected, (state, action: any) => {
             state.loading = false,
                 state.user = null,
                 state.error = action.payload

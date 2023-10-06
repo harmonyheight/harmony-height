@@ -4,6 +4,7 @@ export interface User {
     name: string;
     __v?: number;
     isEmailVerified: boolean;
+    isAdmin: boolean
 }
 
 export interface UserAuthState {

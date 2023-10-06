@@ -11,3 +11,14 @@ export const userLoginAsync = createAsyncThunk(
         }
     }
 );
+export const userRegisterAsync = createAsyncThunk(
+    'auth/register',
+    async (credentials: { name: string, email: string; password: string }, { rejectWithValue }) => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/register', credentials);
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data?.message);
+        }
+    }
+);

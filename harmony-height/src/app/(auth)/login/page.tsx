@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client"
 import { loginFormData, loginSchema } from "@/schema/zod/login";
 import { useAppDispatch } from "@/store/hooks";
@@ -28,6 +29,9 @@ const LoginPage = () => {
             alert(rejectedValueOrSerializedError)
         });
     };
+    const handleRegisterPageNavigate = () => {
+        push('/register')
+    }
     return (
         <div className="flex min-w-full items-center justify-center flex-col h-screen">
             <div className="card w-96 bg-base-100 shadow-xl">
@@ -51,6 +55,8 @@ const LoginPage = () => {
                         <div className="card-actions justify-start">
                             <button className="btn btn-primary mt-4" type="submit">Login</button>
                         </div>
+
+                        <text className="text-blue-800 cursor-pointer pt-3" onClick={handleRegisterPageNavigate}>Don't have account? Register</text>
                     </div>
                 </form>
             </div>
