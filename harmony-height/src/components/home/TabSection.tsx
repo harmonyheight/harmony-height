@@ -41,7 +41,7 @@ const TabSection = () => {
                         tab == "rent" && <div className="flex justify-evenly items-center h-[90%] flex-col">
                             <BsBuildings className="text-2xl" />
                             <p className="text-base sm:text-sm uppercase font-bold">Are you looking for rent a property?</p>
-                            <button className="btn btn-primary mt-4" >BROWSE RENT PROPERTIES</button>
+                            <div className="btn btn-primary mt-4" onClick={() => push("/rent")}>BROWSE RENT PROPERTIES</div>
                         </div>
                     }
                     {
@@ -49,7 +49,7 @@ const TabSection = () => {
 
                             <BsBuildings className="text-2xl" />
                             <p className="text-base sm:text-sm uppercase font-bold">Are you looking for a proptery?</p>
-                            <button className="btn btn-primary mt-4" >BROWSE PROPERTIES</button>
+                            <button className="btn btn-primary mt-4" onClick={() => push("/buy")}>BROWSE PROPERTIES</button>
                         </div>
                     }
                 </div>
