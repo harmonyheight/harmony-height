@@ -35,7 +35,7 @@ const NavBar = ({ children }: { children: React.ReactNode }) => {
                             <li className={`${activeTab == "Contact" ? "bg-primary rounded-md" : ""}`} onClick={() => setActiveTab("Contact")}><Link href="/contactus">Contact Us</Link></li>
                         </ul>
                     </div>
-                    <a className="btn btn-ghost normal-case text-xl">Harmony Height</a>
+                    <a className="btn btn-ghost normal-case text-xl" onClick={() => push('/')}>Harmony Height</a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">

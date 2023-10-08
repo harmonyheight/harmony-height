@@ -22,15 +22,19 @@ const images4 = [
 ];
 
 const Propular = () => {
+
     return <div>
         <div className="px-7 pt-10">
             <div className="border-l-4 border-primary">
                 <h3 className="text-xl font-semibold uppercase pl-2">Popular Properties</h3>
             </div>
         </div>
-        <div className="flex flex-row carousel">
+        <div className="flex flex-row carousel mx-4">
             <PropertyCard images={images} />
             <PropertyCard images={images2} />
+            <PropertyCard images={images2} />
+            <PropertyCard images={images3} />
+            <PropertyCard images={images3} />
             <PropertyCard images={images3} />
         </div>
     </div>;
