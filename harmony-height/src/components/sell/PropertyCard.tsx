@@ -9,27 +9,47 @@ import { GoArrowRight, GoArrowLeft } from 'react-icons/go'
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 
-const PropertyCard = ({ images }) => {
+const PropertyCard = ({ images }: { images: any }) => {
 
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const prevSlide = () => {
+        setCurrentSlide((prevIndex) =>
+            prevIndex === 0 ? images.length - 1 : prevIndex - 1
+        );
+    };
+
+    const nextSlide = () => {
+        setCurrentSlide((prevIndex) =>
+            prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        );
+    };
     return <div className="card w-96 bg-base-100 mt-5 mx-4 carousel-item rounded border p-0">
         <div className="card-body p-0">
             <figure className="h-2/3 w-full border items-center flex flex-row justify-center">
-                <div className="carousel w-fit h-full border-b-2">
-                    {images.map((image: string, index: number) => (<div className={`carousel-item relative w-full bg-gray-100 group`} key={index} id={image}>
-                        <img src={image} alt="Shoes" className="w-full" />
-                    </div>))}
+                <div className="carousel w-fit h-72 border-b-2">
+                    <div className={`carousel-item relative w-full bg-gray-100 group`} >
+                        <img src={images[currentSlide]} alt={images} className="w-full h-full" />
+                    </div>
                 </div>
 
                 <h1 className='absolute bg-red-600 top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-white'>Canada</h1>
                 <div className="absolute bg-primary p-1 rounded-full right-2 top-1 cursor-pointer">
                     <AiOutlineHeart className="text-2xl" />
                 </div>
-
+                {
+                    images.length > 1 && <>
+                        <div className="absolute bg-primary p-1 rounded-full right-2  cursor-pointer opacity-70" onClick={nextSlide}>
+                            <GoArrowRight className="text-xl" />
+                        </div>
+                        <div className="absolute bg-primary p-1 rounded-full left-2  cursor-pointer opacity-70" onClick={prevSlide}>
+                            <GoArrowLeft className="text-xl" />
+                        </div></>
+                }
             </figure>
 
             <div className="h-1/3 p-3">
                 <div className="absolute bg-primary px-2 rounded-lg cursor-pointer right-2">
-                    Images:<span className="pr-1"> {images.length}</span>
+                    Images:<span className="pr-1"> {currentSlide + 1}/{images.length}</span>
                 </div>
                 <h2 className="card-title">
                     $ 1,288,000
