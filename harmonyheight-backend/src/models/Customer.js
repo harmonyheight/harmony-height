@@ -24,6 +24,10 @@ const customerSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  verificationCode: {
+    type: String,
+    required: true,
+  },
   isAdmin: {
     type: String,
     default: false,

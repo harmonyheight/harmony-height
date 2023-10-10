@@ -20,5 +20,16 @@ export const registerSchema = z.object({
   }),
 });
 
+export const verificationCodeSchema = z.object({
+  verificationCode: z.string().refine(
+    (code) => {
+      return /^\d{6}$/.test(code);
+    },
+    {
+      message: 'Code must be a 6-digit number',
+    },
+  ),
+});
 export type loginFormData = z.infer<typeof loginSchema>;
 export type registerFormData = z.infer<typeof registerSchema>;
+export type verificationFormData = z.infer<typeof verificationCodeSchema>;
