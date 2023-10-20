@@ -1,5 +1,6 @@
 "use client"
 import EmailVerification from "@/components/auth/EmailVerification";
+import NavBar from "@/components/navbar/NavBar";
 import { registerFormData, registerSchema } from "@/schema/zod/login";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { userLoginAsync, userRegisterAsync } from "@/store/thunks/userAuthThunk";
@@ -33,6 +34,7 @@ const RegisterPage = () => {
     }
     return (
         <div>
+            <NavBar />
             <div className="flex min-w-full items-center justify-center flex-col h-screen">
                 <div className="card w-96 bg-base-100 shadow-xl">
                     {isVerify ?

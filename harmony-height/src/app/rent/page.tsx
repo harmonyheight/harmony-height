@@ -1,7 +1,12 @@
+"use client"
+import withAuth from "@/components/auth/withAuth";
+import NavBar from "@/components/navbar/NavBar";
 import React from "react";
 
 const RentPage = () => {
-    return <div>RentPage</div>;
+    return <div>
+        <NavBar />
+    </div>;
 };
 
-export default RentPage;
+export default withAuth(RentPage);

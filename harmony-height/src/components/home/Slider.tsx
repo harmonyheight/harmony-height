@@ -12,20 +12,20 @@ const Slider = () => {
                 <h3 className="font-bold text-gray-900 text-2xl uppercase">Explore Our Latest Listings</h3>
                 <span className="text-clip text-right w-full align-super py-4"> Discover a wide range of newly listed homes in Toronto</span>
             </div>
-            <div className="carousel carousel-center w-11/12 p-4 space-x-4 bg-primary rounded-box h-2/3 mt-5 shadow-lg">
+            <div className="carousel carousel-center w-11/12 p-4 space-x-4 bg-base-300 rounded-box h-2/3 mt-5 shadow-lg">
                 <div className="carousel-item">
                     <div className="card w-96 bg-base-100 shadow-xl">
                         <figure>
                             <img src="/home1.jpg" alt="Shoes" />
                             <div className='w-6'>
 
-                                <h1 className='absolute bg-red-600 top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-white'>Canada</h1>
+                                <h1 className='absolute bg-warning top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-accent'>Canada</h1>
                             </div>
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
                                 $ 1,288,000
-                                <div className="badge badge-success">NEW</div>
+                                <div className="badge badge-warning">NEW</div>
                             </h2>
                             <p className='font-extralight'>143 Arthur St, Sudbury Remote Area</p>
                             <div className="card-actions justify-start">
@@ -56,13 +56,13 @@ const Slider = () => {
                             <img src="/home1.jpg" alt="Shoes" />
                             <div className='w-6'>
 
-                                <h1 className='absolute bg-red-600 top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-white'>Canada</h1>
+                                <h1 className='absolute bg-warning top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-accent'>Canada</h1>
                             </div>
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
                                 $ 1,288,000
-                                <div className="badge badge-success">NEW</div>
+                                <div className="badge badge-warning">NEW</div>
                             </h2>
                             <p className='font-extralight'>143 Arthur St, Sudbury Remote Area</p>
                             <div className="card-actions justify-start">
@@ -86,20 +86,19 @@ const Slider = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="carousel-item">
+                </div><div className="carousel-item">
                     <div className="card w-96 bg-base-100 shadow-xl">
                         <figure>
                             <img src="/home1.jpg" alt="Shoes" />
                             <div className='w-6'>
 
-                                <h1 className='absolute bg-red-600 top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-white'>Canada</h1>
+                                <h1 className='absolute bg-warning top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-accent'>Canada</h1>
                             </div>
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
                                 $ 1,288,000
-                                <div className="badge badge-success">NEW</div>
+                                <div className="badge badge-warning">NEW</div>
                             </h2>
                             <p className='font-extralight'>143 Arthur St, Sudbury Remote Area</p>
                             <div className="card-actions justify-start">
@@ -123,20 +122,19 @@ const Slider = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="carousel-item">
+                </div><div className="carousel-item">
                     <div className="card w-96 bg-base-100 shadow-xl">
                         <figure>
                             <img src="/home1.jpg" alt="Shoes" />
                             <div className='w-6'>
 
-                                <h1 className='absolute bg-red-600 top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-white'>Canada</h1>
+                                <h1 className='absolute bg-warning top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-accent'>Canada</h1>
                             </div>
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
                                 $ 1,288,000
-                                <div className="badge badge-success">NEW</div>
+                                <div className="badge badge-warning">NEW</div>
                             </h2>
                             <p className='font-extralight'>143 Arthur St, Sudbury Remote Area</p>
                             <div className="card-actions justify-start">
@@ -160,20 +158,19 @@ const Slider = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="carousel-item">
+                </div><div className="carousel-item">
                     <div className="card w-96 bg-base-100 shadow-xl">
                         <figure>
                             <img src="/home1.jpg" alt="Shoes" />
                             <div className='w-6'>
 
-                                <h1 className='absolute bg-red-600 top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-white'>Canada</h1>
+                                <h1 className='absolute bg-warning top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-accent'>Canada</h1>
                             </div>
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title">
                                 $ 1,288,000
-                                <div className="badge badge-success">NEW</div>
+                                <div className="badge badge-warning">NEW</div>
                             </h2>
                             <p className='font-extralight'>143 Arthur St, Sudbury Remote Area</p>
                             <div className="card-actions justify-start">

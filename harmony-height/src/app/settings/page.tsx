@@ -1,7 +1,10 @@
+import NavBar from "@/components/navbar/NavBar";
 import React from "react";
 
 const SettingsPage = () => {
-    return <div>SettingsPage</div>;
+    return <div>
+        <NavBar />
+    </div>;
 };
 
 export default SettingsPage;
