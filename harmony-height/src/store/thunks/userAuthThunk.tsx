@@ -36,7 +36,7 @@ export const emailVerifyAsync = createAsyncThunk(
             toast.success(response.data?.message)
             return response.data;
         } catch (error: any) {
-            toast.error(error.response?.data?.errors)
+            toast.error(error.response?.data?.message)
             return rejectWithValue(error.response?.data?.errors);
         }
     }

@@ -3,6 +3,7 @@ import { dummyData, homeImages } from "@/utils/utils";
 import React from "react";
 let test = false;
 import { Listbox } from '@headlessui/react'
+import { useRouter } from "next/navigation";
 
 const departments = [
     { id: 1, name: 'Marketing', contact: 'Durward Reynolds' },
@@ -29,11 +30,12 @@ const people = [
 ]
 export const TableListings = () => {
     const [selectedPeople, setSelectedPeople] = React.useState([people[0], people[1]])
+    const { push } = useRouter();
     return <div className="mt-16">
         <div className="mb-4 flex items-center justify-between">
 
             <span className="uppercase font-semibold text-xl">PROPERTIES LISTING</span>
-            <div className="btn btn-primary">ADD NEW</div>
+            <div className="btn btn-primary" onClick={() => push("/profile/listings/new")}>ADD NEW</div>
         </div>
         <div className="overflow-x-auto">
             <table className="table table-pin-cols table-lg">
