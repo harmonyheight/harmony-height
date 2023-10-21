@@ -1,11 +1,11 @@
 const express = require('express');
+const { login, register, verifyEmail } = require('../controllers');
+const { validate } = require('../validations/reqValidateMiddleware');
 const {
   loginValidationRules,
   registerValidateRules,
-  validate,
   authenticateToken,
-} = require('../middlewares/authValidationMiddleware');
-const { login, register, verifyEmail } = require('../controllers');
+} = require('../validations/authValidationMiddleware');
 
 const router = express.Router();
 

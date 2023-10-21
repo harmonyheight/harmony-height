@@ -6,15 +6,17 @@ const routes = require('./src/routes');
 const { connectToMongoDB } = require('./src/utils/db');
 const app = express();
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 // middleware that can be used to enable CORS with various options.
+app.use('/public/uploads', express.static('public/uploads'));
 app.use(cors());
 app.get('/', (req, res) => {
   res.send('<h1>Harmony Height Server is up and running</h1>');
 });
 app.use('/api', routes.authenticationRoutes);
+app.use('/api', routes.propertyListingRoutes);
 
 connectToMongoDB().then(() =>
   app.listen(process.env.PORT, () =>
