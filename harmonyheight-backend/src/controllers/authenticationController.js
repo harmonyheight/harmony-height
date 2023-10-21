@@ -25,6 +25,11 @@ exports.login = async (req, res) => {
         customer.verificationCode,
         customer.name,
       );
+      const keysToDelete = ['password', 'verificationCode', 'isAdmin', '__v'];
+      keysToDelete.forEach((key) => {
+        delete customer._doc[key];
+      });
+
       if (responseMail) {
         return res.status(200).json({
           message: 'Email verificationCode has been sent to your email.',
@@ -47,8 +52,10 @@ exports.login = async (req, res) => {
         expiresIn: '1d',
       },
     );
-    delete customer._doc.password;
-    delete customer._doc.verificationCode;
+    const keysToDelete = ['password', 'verificationCode', 'isAdmin', '__v'];
+    keysToDelete.forEach((key) => {
+      delete customer._doc[key];
+    });
     res
       .status(200)
       .json({ message: 'Login successful', token, user: customer._doc });
