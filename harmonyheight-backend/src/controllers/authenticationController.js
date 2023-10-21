@@ -10,11 +10,11 @@ exports.login = async (req, res) => {
   try {
     const customer = await Customer.findOne({ email });
     if (!customer) {
-      return res.status(401).json({ errors: 'Unauthorized access' });
+      return res.status(404).json({ message: 'User account not found' });
     }
     const isPasswordCorrect = await bcrypt.compare(password, customer.password);
     if (!isPasswordCorrect) {
-      return res.status(401).json({ errors: 'Unauthorized access' });
+      return res.status(401).json({ message: 'Invalid Credientials' });
     }
     if (!customer.isEmailVerified) {
       const verificationCode = generateVerificationCode();
@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
       } else {
         return res
           .status(500)
-          .json({ errors: 'Email verification code sending failed.' });
+          .json({ message: 'Email verification code sending failed.' });
       }
     }
 
@@ -54,7 +54,7 @@ exports.login = async (req, res) => {
       .json({ message: 'Login successful', token, user: customer._doc });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ errors: 'Internal Server Error' });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
@@ -84,11 +84,11 @@ exports.register = async (req, res) => {
     } else {
       return res
         .status(500)
-        .json({ errors: 'Email verification code sending failed.' });
+        .json({ message: 'Email verification code sending failed.' });
     }
   } catch (error) {
     const validationError = JSON.parse(error.message);
-    res.status(422).json({ errors: validationError });
+    res.status(422).json({ message: validationError });
   }
 };
 // /verify/:email/:code
@@ -99,7 +99,7 @@ exports.verifyEmail = async (req, res) => {
     const user = await Customer.findOne({ email, verificationCode: code });
 
     if (!user) {
-      return res.status(400).json({ errors: 'Invalid verification code' });
+      return res.status(400).json({ message: 'Invalid verification code' });
     }
 
     user.isEmailVerified = true;
@@ -108,6 +108,6 @@ exports.verifyEmail = async (req, res) => {
     res.status(200).json({ message: 'Email verified successfully' });
   } catch (error) {
     console.error('Error verifying email:', error);
-    res.status(500).json({ errors: 'Error verifying email' });
+    res.status(500).json({ message: 'Error verifying email' });
   }
 };

@@ -1,4 +1,6 @@
+"use client"
 import Statistics from "@/components/auth/Statistics";
+import withAuth from "@/components/auth/withAuth";
 import React from "react";
 
 const AnalyticsPage = () => {
@@ -8,4 +10,4 @@ const AnalyticsPage = () => {
     </div>;
 };
 
-export default AnalyticsPage;
+export default withAuth(AnalyticsPage);
