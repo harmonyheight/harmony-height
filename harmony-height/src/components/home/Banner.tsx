@@ -2,7 +2,7 @@
 import React from "react";
 const Banner = () => {
     const calculateTimeLeft = () => {
-        const difference = +new Date('2023-10-21T23:59:59') - +new Date();
+        const difference = +new Date('2023-10-27T23:59:59') - +new Date();
         if (difference < 0) {
             return { days: 0, hours: 0, minutes: 0, seconds: 0 };
         }
