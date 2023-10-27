@@ -53,7 +53,7 @@ const userAuthSlice = createSlice({
 const rootPersistConfig = {
     key: 'root',
     storage: storage,
-    blacklist: ['auth']
+    blacklist: ['auth', 'navigation']
 }
 export const { logout } = userAuthSlice.actions;
 export default persistReducer(rootPersistConfig, userAuthSlice.reducer);

@@ -24,9 +24,6 @@ const LoginPage = () => {
     const onSubmit: SubmitHandler<loginFormData> = async (data) => {
         await dispatch(userLoginAsync(data)).unwrap().then((originalPromiseResult) => {
             // handle result here
-            console.log('====================================');
-            console.log(originalPromiseResult);
-            console.log('====================================');
             if (originalPromiseResult?.user?.isEmailVerified) {
                 push("/")
             }
