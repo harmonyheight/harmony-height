@@ -32,8 +32,13 @@ export const newListingSchema = z.object({
       message: 'Please enter bedrooms value',
     },
   ),
-  propertyType: z.string().min(3, { message: 'Please select property type' }),
+  type: z.string().min(3, { message: 'Please select property type' }),
+  lease: z.boolean().default(false),
+  leasePeroid: z.string().min(0, { message: 'Please select city' }).default(''),
   parking: z.boolean().default(false),
+  water: z.boolean().default(false),
+  electricity: z.boolean().default(false),
+  wifi: z.boolean().default(false),
   oldYear: z
     .string()
     .regex(/^\d{4}$/, 'Please enter a valid 4-digit year')

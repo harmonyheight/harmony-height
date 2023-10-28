@@ -13,7 +13,7 @@ import { AiOutlineLogout } from 'react-icons/ai'
 export default function TopBar({ showNav, setShowNav }: { showNav: any, setShowNav: any }) {
     return (
         <div
-            className={`shadow-sm fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] bg-primary ${showNav ? "pl-56" : ""
+            className={`shadow-sm fixed z-20 w-full h-16 flex justify-between items-center transition-all duration-[400ms] bg-primary ${showNav ? "pl-56" : ""
                 }`}
         >
             <div className="pl-4 md:pl-16">
