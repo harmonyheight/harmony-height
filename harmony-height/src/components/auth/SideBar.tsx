@@ -12,7 +12,7 @@ const SideBar = forwardRef((props, ref) => {
     const pathname = usePathname()
 
     return (
-        <div ref={ref as React.RefObject<HTMLDivElement>} className="fixed w-56 h-full bg-white shadow">
+        <div ref={ref as React.RefObject<HTMLDivElement>} className="fixed w-56 h-full bg-white shadow z-50">
             <div className="flex justify-center mt-2 mb-7">
                 <picture>
                     <img
