@@ -69,6 +69,7 @@ export const getUserListings = createAsyncThunk('listing/getuserlisting',
         }
     })
 
+
 export const deleteUserListing = createAsyncThunk('listing/deleteUserListing',
     async (credentials: { listingId: string, images: string[] }, { rejectWithValue }) => {
         try {

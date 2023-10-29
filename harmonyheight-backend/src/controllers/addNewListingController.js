@@ -104,8 +104,14 @@ const addListing = async (req, res) => {
 // get listing by userId
 const getUserListingsController = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1; // Current page, default to 1
+    const limit = parseInt(req.query.limit) || 3; // Number of listings per page, default to 10
+    const skip = (page - 1) * limit;
+    // Use Mongoos
     // Use Mongoose to find listings associated with the user
     const listings = await Listings.find({ user: req.customerId })
+      .skip(skip)
+      .limit(limit)
       .populate('user', 'name email')
       .exec();
     if (listings.length > 0) {

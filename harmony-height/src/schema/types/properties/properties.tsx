@@ -31,3 +31,10 @@ export interface UserListingsState {
     loading: boolean;
     error: string | null;
 }
+
+
+export interface HomeListingsState {
+    latestListings: Listing[] | [];
+    loading: boolean;
+    error: string | null;
+}

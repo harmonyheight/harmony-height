@@ -4,10 +4,12 @@ import thunk from 'redux-thunk'
 import { persistStore } from "redux-persist"
 import userAuthSlice from './reducers/userAuthSlice'
 import propertyListingSlice from './reducers/propertyListingSlice'
+import homeListingSlice from './reducers/homeListingSlice'
 const store = configureStore({
     reducer: {
         auth: userAuthSlice,
-        userlistings: propertyListingSlice
+        userlistings: propertyListingSlice,
+        homelisting: homeListingSlice,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat(thunk, logger),
 })

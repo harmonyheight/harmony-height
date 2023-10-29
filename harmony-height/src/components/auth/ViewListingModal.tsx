@@ -70,6 +70,12 @@ const ViewListingModal = ({ selectedList }: { selectedList: Listing }) => {
                             <span className="font-medium">{selectedList.type}</span>
                         </div>
                     </div>
+                    <div className="flex justify-between w-full font-normal my-2">
+                        <div className="w-full justify-between flex px-1">
+                            <span>Price</span>
+                            <span className="font-medium">$ {selectedList.price}</span>
+                        </div>
+                    </div>
                     {
                         selectedList.lease &&
                         <div className="flex justify-between w-full font-normal my-2">
