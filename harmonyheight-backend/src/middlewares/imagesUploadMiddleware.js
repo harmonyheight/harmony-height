@@ -13,4 +13,4 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-module.exports = upload.array('images', 5); // 'images' is the field name for the file input, and 5 is the maximum number of files allowed.
+module.exports = upload.array('images', 12); // 'images' is the field name for the file input, and 5 is the maximum number of files allowed.

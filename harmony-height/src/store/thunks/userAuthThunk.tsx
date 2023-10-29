@@ -7,6 +7,7 @@ export const userLoginAsync = createAsyncThunk(
         try {
             const response = await axios.post('http://localhost:8080/api/login', credentials);
             toast.success(response.data?.message)
+            localStorage.setItem("userToken", response.data?.token)
             return response.data;
         } catch (error: any) {
             toast.error(error.response?.data?.message)

@@ -5,11 +5,12 @@ import { newListingFormData, newListingSchema } from "@/schema/zod/newListing";
 import { useAppDispatch } from "@/store/hooks";
 import { fetchCountryStatesAsync, fetchStateCitiesAsync, getAuthAccessTokenAsync } from "@/store/thunks/propertyListingThunk";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import React, { Fragment, useState, useEffect, ChangeEvent, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-
+import { toast } from 'react-toastify'
 const AddNewListingPage = () => {
-    const [selectedImages, setSelectedImages] = useState([]);
+    const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
     const [states, setStates] = useState([
         { state_name: 'Alberta' },
@@ -29,9 +30,36 @@ const AddNewListingPage = () => {
         resolver: zodResolver(newListingSchema),
     });
     const onSubmit: SubmitHandler<newListingFormData> = async (data) => {
-        console.log('====================================');
-        console.log(data);
-        console.log('====================================');
+        if (selectedImages.length == 0) {
+            toast.warning("Please select images")
+        } else {
+            console.log('====================================');
+            console.log("Images", selectedImages)
+            console.log(data);
+            console.log('====================================');
+            await axios.post('http://localhost:8080/api/create-listing', {
+                ...data,
+                images: selectedImages
+            }, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('userToken')}`,
+                    "Accept": "application/json"
+                }
+            }).then(response => {
+                // Handle the response
+                console.log('====================================');
+                console.log("added ==> ", response.data);
+                console.log('====================================');
+                toast.success(response.data?.message)
+                reset(); // Clear form values
+                clearErrors(); // Clear validation errors
+                setSelectedImages([])
+            })
+                .catch(error => {
+                    // Handle any errors
+                    console.error(error);
+                });
+        }
     }
     const handleReset = () => {
         reset(); // Clear form values
@@ -71,12 +99,47 @@ const AddNewListingPage = () => {
         });
     }
 
-    const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = async (event: ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(event.target.files || []);
-        setSelectedImages(files);
+        if (files.length > 0) {
+            const formData = new FormData();
+            files.forEach((imageFile, index) => {
+                formData.append(`images`, imageFile, imageFile.name);
+            });
+
+            await axios.post('http://localhost:8080/api/listing/new', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then(response => {
+                    // Handle the response
+                    console.log(response.data);
+                    toast.success(response.data?.message)
+                    setSelectedImages(response.data?.images);
+                })
+                .catch(error => {
+                    // Handle any errors
+                    console.error(error);
+                });
+
+        }
     };
-    const handleImageRemove = (index: number) => {
+    const handleImageRemove = async (index: number) => {
         const updatedImages = [...selectedImages];
+        await axios.post('http://localhost:8080/api/delete-image', {
+            imageUrl: selectedImages[index]
+        })
+            .then(response => {
+                // Handle the response
+                console.log(response.data);
+                toast.success(response.data?.message)
+                setSelectedImages(response.data?.images);
+            })
+            .catch(error => {
+                // Handle any errors
+                console.error(error);
+            });
         updatedImages.splice(index, 1);
         setSelectedImages(updatedImages);
     };
@@ -90,21 +153,23 @@ const AddNewListingPage = () => {
             <div className="my-3 flex-col flex">
                 <label className="label-text text-base font-semibold pb-1">Property Images</label>
                 <div className="carousel carousel-center w-[30vw] p-4 space-x-6  h-[30vh] rounded-box bg-accent">
-                    {selectedImages.map((file, index) => (
+                    {selectedImages.length > 0 && selectedImages.map((file, index) => (
                         <div className="carousel-item" key={index}>
-                            <img src={URL.createObjectURL(file)} alt="Pizza" className="rounded-md" />
+                            <img src={`${file}`} alt="Pizza" className="rounded-md" />
                             <span className="badge badge-xs rounded-full bg-error text-white p-2 cursor-pointer" onClick={() => handleImageRemove(index)}>X</span>
                         </div>
                     ))}
                 </div>
                 <div className="w-full my-3 ">
-                    <input
-                        type="file"
-                        className="file-input file-input-ghost "
-                        multiple
-                        accept="image/*"
-                        onChange={handleImageChange}
-                    />
+                    {
+                        selectedImages.length == 0 && <input
+                            type="file"
+                            className="file-input file-input-ghost "
+                            multiple
+                            accept="image/*"
+                            onChange={handleImageChange}
+                        />
+                    }
                 </div>
             </div>
             <div className="my-3 flex-col flex">
@@ -158,7 +223,11 @@ const AddNewListingPage = () => {
                 </div>
                 {errors.type && <span className="text-red-600">{errors.type.message}</span>}
             </div>
-
+            <div className="mb-3 flex-col flex">
+                <label className="label-text text-base font-semibold pb-1">Spaces</label>
+                <input type="number" placeholder="Enter spaces" className={`input input-bordered w-full ${errors.spaces ? "input-error" : 'input-accent'}`}  {...register('spaces', { required: 'Spaces field is required' })} />
+                {errors.spaces && <span className="text-red-600">{errors.spaces.message}</span>}
+            </div>
             <div className="mb-3 flex-col flex">
                 <label className="label-text text-base font-semibold pb-1">Bedrooms</label>
                 <input type="number" placeholder="Enter bedrooms number" className={`input input-bordered w-full ${errors.bedrooms ? "input-error" : 'input-accent'}`}  {...register('bedrooms', { required: 'Bedrooms field is required' })} />
@@ -191,7 +260,7 @@ const AddNewListingPage = () => {
                 watch('lease') === true && <div className="mb-3 flex-col flex">
                     <label className="label-text text-base font-semibold pb-1">Lease Peroid</label>
                     <div>
-                        <input type="text" placeholder="Enter lease peroid" className={`input input-bordered ${errors.leasePeroid ? "input-error" : 'input-accent'}`}  {...register('leasePeroid', { required: 'Lease peorid is required' })} />
+                        <input type="text" placeholder="Enter lease peroid" className={`input input-bordered w-full ${errors.leasePeroid ? "input-error" : 'input-accent'}`}  {...register('leasePeroid', { required: 'Lease peorid is required' })} />
                     </div>
                     {errors.leasePeroid && <span className="text-red-600">{errors.leasePeroid.message}</span>}
                 </div>
