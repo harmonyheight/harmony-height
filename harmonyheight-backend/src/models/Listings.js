@@ -5,6 +5,10 @@ const listingSchema = new Schema({
     type: String,
     required: true,
   },
+  price: {
+    type: String,
+    required: true,
+  },
   city: String,
   bathrooms: {
     type: Number,

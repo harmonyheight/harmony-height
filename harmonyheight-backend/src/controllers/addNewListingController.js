@@ -65,6 +65,7 @@ const addListing = async (req, res) => {
     const newListing = new Listings({
       state: req.body.state,
       city: req.body.city,
+      price: req.body.price,
       bathrooms: req.body.bathrooms,
       area: req.body.area,
       spaces: req.body.spaces,
@@ -99,4 +100,68 @@ const addListing = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-module.exports = { uploadImages, deleteImage, addListing };
+
+// get listing by userId
+const getUserListingsController = async (req, res) => {
+  try {
+    // Use Mongoose to find listings associated with the user
+    const listings = await Listings.find({ user: req.customerId })
+      .populate('user', 'name email')
+      .exec();
+    if (listings.length > 0) {
+      return res.status(200).json({
+        message: 'User listing retrieved successfully',
+        listings,
+      });
+    } else {
+      return res.status(404).json({
+        error: 'You have not added any listing yet',
+        listings,
+      });
+    }
+  } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+const deleteUserListingById = async (req, res) => {
+  try {
+    const { images, listingId } = req.body; // Assuming imageUrls is an array of URLs
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      const parsedUrl = new URL(image);
+      const filename = path.basename(parsedUrl.pathname);
+      console.log('====================================');
+      console.log(filename);
+      console.log('====================================');
+      // Construct the full path to the image
+      const imagePath = path.join('public', 'uploads', filename); // Adjust the path as needed
+      console.log('====================================');
+      console.log(imagePath);
+      console.log('====================================');
+      // Check if the image file exists
+      if (fs.existsSync(imagePath)) {
+        // Delete the image
+        fs.unlinkSync(imagePath);
+      }
+    }
+    // Use Mongoose to find and remove the listing by its ID
+    await Listings.findByIdAndRemove(listingId);
+    // You can now handle the deletion of associated images using the imageUrlsToDelete array.
+
+    res.status(200).json({ message: 'Listing deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+module.exports = {
+  uploadImages,
+  deleteImage,
+  addListing,
+  getUserListingsController,
+  deleteUserListingById,
+};

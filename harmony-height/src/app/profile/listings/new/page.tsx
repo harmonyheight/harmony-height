@@ -199,6 +199,13 @@ const AddNewListingPage = () => {
                 </div>
             }
             <div className="mb-3 flex-col flex">
+                <label className="label-text text-base font-semibold pb-1">Price</label>
+                <div>
+                    <input type="text" placeholder="Enter price here" className={`input input-bordered w-full ${errors.price ? "input-error" : 'input-accent'}`}  {...register('price', { required: 'Price is required' })} />
+                </div>
+                {errors.price && <span className="text-red-600">{errors.price.message}</span>}
+            </div>
+            <div className="mb-3 flex-col flex">
                 <label className="label-text text-base font-semibold pb-1">ZIP Code</label>
                 <div>
                     <input type="text" placeholder="Enter zip code here" className={`input input-bordered w-full ${errors.zipcode ? "input-error" : 'input-accent'}`}  {...register('zipcode', { required: 'ZIP Code is required' })} />

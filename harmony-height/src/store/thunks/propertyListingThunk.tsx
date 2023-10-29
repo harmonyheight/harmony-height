@@ -1,6 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
+import axiosUserInstance from "../api/axiosUserInstance";
 export const getAuthAccessTokenAsync = createAsyncThunk(
     'listing/accesstoken',
     async (_, { rejectWithValue }) => {
@@ -53,3 +54,30 @@ export const fetchStateCitiesAsync = createAsyncThunk(
         }
     }
 );
+
+
+export const getUserListings = createAsyncThunk('listing/getuserlisting',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axiosUserInstance.get('/user-listings');
+            toast.success(response.data?.message)
+            return response.data;
+        } catch (error: any) {
+            toast.error(error.response?.data?.error)
+
+            return rejectWithValue(error.response?.data?.error);
+        }
+    })
+
+export const deleteUserListing = createAsyncThunk('listing/deleteUserListing',
+    async (credentials: { listingId: string, images: string[] }, { rejectWithValue }) => {
+        try {
+            const response = await axiosUserInstance.post('/listings/deletebyid', credentials);
+            toast.success(response.data?.message)
+            return response.data;
+        } catch (error: any) {
+            toast.error(error.response?.data?.error)
+
+            return rejectWithValue(error.response?.data?.error);
+        }
+    })

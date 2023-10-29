@@ -15,4 +15,16 @@ router.post(
   authenticateToken,
   addNewListingController.addListing,
 );
+
+router.get(
+  '/user-listings',
+  authenticateToken,
+  addNewListingController.getUserListingsController,
+);
+
+router.post(
+  '/listings/deletebyid',
+  authenticateToken,
+  addNewListingController.deleteUserListingById,
+);
 module.exports = router;

@@ -1,18 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
-import { UserAuthState, User } from "@/schema/types/userAuth/userAuth";
-import { userLoginAsync, userRegisterAsync } from "../thunks/userAuthThunk";
+import { getUserListings } from "../thunks/propertyListingThunk";
+import { UserListingsState } from "@/schema/types/properties/properties";
 
-const initialState = {
-    countryStates: [],
+const initialState: UserListingsState = {
+    userListings: [],
     loading: false,
     error: null,
 };
 const propertyListingSlice = createSlice({
     name: 'listing',
     initialState,
-    reducers: {
-
+    reducers: {},
+    extraReducers(builder) {
+        builder.addCase(getUserListings.pending, (state) => {
+            state.loading = true;
+            state.error = null
+        })
+        builder.addCase(getUserListings.fulfilled, (state, action) => {
+            state.loading = false,
+                state.error = null,
+                state.userListings = action.payload?.listings
+        }).addCase(getUserListings.rejected, (state, action: any) => {
+            state.loading = false,
+                state.userListings = [],
+                state.error = action.payload
+        })
     },
 });
 
