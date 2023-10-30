@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api', routes.authenticationRoutes);
 app.use('/api', routes.propertyListingRoutes);
+app.use('/api', routes.homeRoutes);
 
 connectToMongoDB().then(() =>
   app.listen(process.env.PORT, () =>

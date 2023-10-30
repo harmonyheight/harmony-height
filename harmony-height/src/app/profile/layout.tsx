@@ -9,6 +9,7 @@ const ProfileLayout = ({
 }) => {
     return <div>
         <Layout>
+
             {children}
         </Layout></div>;
 };

@@ -6,7 +6,6 @@ import { LiaBedSolid, LiaPencilRulerSolid } from "react-icons/lia";
 import { PiBathtubLight } from "react-icons/pi";
 import { TbBuildingCommunity } from "react-icons/tb";
 import { GoArrowRight, GoArrowLeft } from 'react-icons/go'
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { PropertyCardType } from "@/schema/types/propertied/buy";
 
 

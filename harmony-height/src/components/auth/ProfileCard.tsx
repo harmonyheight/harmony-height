@@ -1,10 +1,16 @@
 "use client"
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { getUserListingTypeCountAsync } from "@/store/thunks/propertyListingThunk";
 import React from "react";
 import { BsFillHeartFill, BsFillBuildingsFill } from 'react-icons/bs'
 import { GiHouseKeys } from 'react-icons/gi'
 const ProfileCard = () => {
     const { user } = useAppSelector(state => state.auth)
+    const { userListingTypeCount, loading } = useAppSelector(state => state.userlistings)
+    const dispatch = useAppDispatch();
+    React.useEffect(() => {
+        dispatch(getUserListingTypeCountAsync())
+    }, [])
     return (
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-3 mt-5 p-5 md:grid-cols-1">
             <div className="rounded-sm flex flex-row p-5 shadow-sm">
@@ -38,8 +44,12 @@ const ProfileCard = () => {
                         <div className="stat-figure text-accent text-5xl">
                             <BsFillBuildingsFill />
                         </div>
+
                         <div className="stat-title text-accent">Total sale Properties</div>
-                        <div className="stat-value text-accent">10</div>
+                        {
+                            loading ? <span className="loading loading-dots loading-md"></span> :
+                                <div className="stat-value text-accent">{userListingTypeCount?.totalSellType}</div>
+                        }
                         <div className="stat-desc text-accent">Your total properties for sale</div>
                     </div>
                 </div>
@@ -51,7 +61,10 @@ const ProfileCard = () => {
                             <GiHouseKeys />
                         </div>
                         <div className="stat-title text-accent">Total Rented Properties</div>
-                        <div className="stat-value text-accent">10</div>
+                        {
+                            loading ? <span className="loading loading-dots loading-md"></span> :
+                                <div className="stat-value text-accent">{userListingTypeCount?.totalRentType}</div>
+                        }
                         <div className="stat-desc text-accent">Your total properties for rent</div>
                     </div>
                 </div>

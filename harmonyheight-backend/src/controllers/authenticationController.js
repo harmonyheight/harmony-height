@@ -98,7 +98,7 @@ exports.register = async (req, res) => {
     res.status(422).json({ message: validationError });
   }
 };
-// /verify/:email/:code
+
 exports.verifyEmail = async (req, res) => {
   try {
     const { email, code } = req.body;
