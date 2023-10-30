@@ -57,9 +57,12 @@ export const fetchStateCitiesAsync = createAsyncThunk(
 
 
 export const getUserListings = createAsyncThunk('listing/getuserlisting',
-    async (_, { rejectWithValue }) => {
+    async (credentials: {
+        page: number,
+        itemsPerPage: number
+    }, { rejectWithValue }) => {
         try {
-            const response = await axiosUserInstance.get('/user-listings');
+            const response = await axiosUserInstance.get(`/user-listings?page=${credentials.page}&itemsPerPage=${credentials.itemsPerPage}`);
             toast.success(response.data?.message)
             return response.data;
         } catch (error: any) {
@@ -79,6 +82,32 @@ export const deleteUserListing = createAsyncThunk('listing/deleteUserListing',
         } catch (error: any) {
             toast.error(error.response?.data?.error)
 
+            return rejectWithValue(error.response?.data?.error);
+        }
+    })
+
+export const getUserListingTypeCountAsync = createAsyncThunk('listing/listingTypeCount',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axiosUserInstance.get('/listings/typecount');
+            toast.success(response.data?.message)
+            return response.data?.typeCount;
+        } catch (error: any) {
+            toast.error(error.response?.data?.error)
+
+            return rejectWithValue(error.response?.data?.error);
+        }
+    })
+///listings/countlistingbymonth
+
+export const getUserCountlistingByMonthAsync = createAsyncThunk('listing/listingcountbymonth',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axiosUserInstance.get('/listings/countlistingbymonth');
+            toast.success(response.data?.message)
+            return response.data?.countsArray;
+        } catch (error: any) {
+            toast.error(error.response?.data?.error)
             return rejectWithValue(error.response?.data?.error);
         }
     })

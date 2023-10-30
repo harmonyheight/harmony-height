@@ -46,9 +46,15 @@ export const TableListings = () => {
     const { push } = useRouter();
     const dispatch = useAppDispatch();
     const { userListings, loading } = useAppSelector(state => state.userlistings);
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [itemsPerPage, setItemsPerPage] = React.useState(3); // Number of items per page
+
     React.useEffect(() => {
-        dispatch(getUserListings())
-    }, []);
+        dispatch(getUserListings({
+            itemsPerPage: itemsPerPage,
+            page: currentPage
+        }))
+    }, [currentPage, dispatch, itemsPerPage]);
 
     return <div className="mt-16">
         <div className="mb-4 flex items-center justify-between">
@@ -74,7 +80,7 @@ export const TableListings = () => {
                     {/* row 1 */}
                     {
 
-                        userListings.length > 0 && userListings.map((item, index) => (
+                        userListings.length > 0 ? userListings.map((item, index) => (
                             <tr key={index}>
                                 <td>
                                     <div className="flex items-center space-x-3">
@@ -115,10 +121,16 @@ export const TableListings = () => {
                                     <ViewListingModal selectedList={selectedList} />
                                 </th>
                             </tr>
-                        ))
+                        )) : loading && <span className="loading loading-dots loading-lg"></span>
                     }
                 </tbody>
             </table>
+            {userListings.length > 0 &&
+                <div className="w-full flex justify-between items-center">
+                    <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1 || loading} className="btn btn-secondary">Previous</button>
+                    <button onClick={() => setCurrentPage(currentPage + 1)} disabled={userListings.length < itemsPerPage || loading} className="btn btn-primary">Next</button>
+                </div>
+            }
             <div className="w-full items-center justify-center flex mt-4">
                 {loading && <span className="loading loading-dots loading-lg"></span>}
                 {

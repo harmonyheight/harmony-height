@@ -25,9 +25,20 @@ export interface Listing {
     createdAt: { $date: string };
     __v: number;
 }
+export interface UserListingTypeCount {
+    totalRentType: number,
+    totalSellType: number,
+}
 
+export interface CountListingByMonth {
+    month: string,
+    forSale: number,
+    forRent: number
+}
 export interface UserListingsState {
     userListings: Listing[] | [];
+    userListingTypeCount: UserListingTypeCount | null;
+    countListingByMonth: CountListingByMonth[] | [];
     loading: boolean;
     error: string | null;
 }

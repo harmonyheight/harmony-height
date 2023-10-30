@@ -1,6 +1,11 @@
 const express = require('express');
 const addNewListingController = require('../controllers/addNewListingController');
 const { validate } = require('../validations/reqValidateMiddleware');
+
+const {
+  userCountListingsByType,
+  countListingsByMonth,
+} = require('../controllers/dashboardController');
 const upload = require('../middlewares/imagesUploadMiddleware');
 const {
   authenticateToken,
@@ -26,5 +31,12 @@ router.post(
   '/listings/deletebyid',
   authenticateToken,
   addNewListingController.deleteUserListingById,
+);
+
+router.get('/listings/typecount', authenticateToken, userCountListingsByType);
+router.get(
+  '/listings/countlistingbymonth',
+  authenticateToken,
+  countListingsByMonth,
 );
 module.exports = router;

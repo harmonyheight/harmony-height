@@ -104,15 +104,18 @@ const addListing = async (req, res) => {
 // get listing by userId
 const getUserListingsController = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; // Current page, default to 1
-    const limit = parseInt(req.query.limit) || 3; // Number of listings per page, default to 10
-    const skip = (page - 1) * limit;
-    // Use Mongoos
+    const page = parseInt(req.query.page) || 1; // Current page (default is 1)
+    const itemsPerPage = parseInt(req.query.itemsPerPage) || 3; // Items per page (default is 10)
+
+    // Calculate the number of items to skip and limit
+    const skip = (page - 1) * itemsPerPage;
+    const limit = itemsPerPage;
+
     // Use Mongoose to find listings associated with the user
     const listings = await Listings.find({ user: req.customerId })
+      .populate('user', 'name email')
       .skip(skip)
       .limit(limit)
-      .populate('user', 'name email')
       .exec();
     if (listings.length > 0) {
       return res.status(200).json({
@@ -121,7 +124,7 @@ const getUserListingsController = async (req, res) => {
       });
     } else {
       return res.status(404).json({
-        error: 'You have not added any listing yet',
+        error: 'No Listing found',
         listings,
       });
     }
