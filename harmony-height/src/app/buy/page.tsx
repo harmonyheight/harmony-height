@@ -9,7 +9,9 @@ const BuyPage = () => {
     return <div>
         <NavBar />
         <HeroSection />
-        <Slides />
+        <div className="px-4 rounded-lg overflow-hidden my-5">
+            <Slides />
+        </div>
         <Propular />
         <div className="w-full h-2/3">
             <NewListing />

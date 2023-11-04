@@ -49,3 +49,9 @@ export interface HomeListingsState {
     loading: boolean;
     error: string | null;
 }
+
+export interface BuyListingsState {
+    popularListings: Listing[] | [];
+    loading: boolean;
+    error: string | null;
+}

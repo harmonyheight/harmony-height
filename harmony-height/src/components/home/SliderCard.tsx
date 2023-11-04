@@ -7,7 +7,7 @@ const SliderCard = ({ list }: { list: Listing }) => {
     return (
         <div className="carousel-item">
             <div className="card w-96 bg-base-100 shadow-xl">
-                <figure>
+                <figure >
                     <img src={`${list.images[0]}`} alt="Shoes" />
                     <div className='w-6'>
                         <h1 className='absolute bg-warning top-2 left-0 px-5 rounded-br-xl rounded-tl-md text-accent'>{list.state}</h1>

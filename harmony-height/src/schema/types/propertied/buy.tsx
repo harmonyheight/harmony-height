@@ -1,7 +1,6 @@
 export interface PropertyCardType {
     _id: string
-    address: string,
-    city: string,
+    city?: string,
     price: string,
     bedrooms: string,
     bathrooms: string,

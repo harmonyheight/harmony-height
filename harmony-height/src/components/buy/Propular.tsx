@@ -1,61 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
+"use client"
 import React from "react";
 import PropertyCard from "./PropertyCard";
-import { PropertyCardType } from "@/schema/types/propertied/buy";
-const images: string[] = [
-    '/home3.jpg',
-    '/home2.jpg',
-    '/home1.jpg',
-];
-const images1: string[] = [
-    '/home1.jpg',
-    '/home3.jpg',
-    '/home2.jpg',
-];
-const images2: string[] = [
-    '/home1.jpg',
-    '/home2.jpg',
-    '/home3.jpg',
-];
-const NewListed: PropertyCardType[] = [
-    {
-        _id: '1',
-        address: '143 Arthur St, Sudbury Remote Area',
-        city: 'Toronto',
-        price: '1288000',
-        bedrooms: '1',
-        bathrooms: '2',
-        area: '1130 SqFt',
-        badge: 'new',
-        images: images,
-        type: 'Residentials'
-    },
-    {
-        _id: '2',
-        address: '143 Arthur St, Sudbury Remote Area',
-        city: 'Calgary',
-        price: '1288000',
-        bedrooms: '5',
-        bathrooms: '6',
-        area: '1130 SqFt',
-        images: images1,
-        type: 'Residentials'
-    },
-    {
-        _id: '2',
-        address: '143 Arthur St, Sudbury Remote Area',
-        city: 'Vancouver',
-        price: '1288000',
-        bedrooms: '4',
-        bathrooms: '5',
-        area: '1130 SqFt',
-        badge: 'new',
-        images: images2,
-        type: 'Residentials'
-    }
-]
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { getBuyPopularListings } from "@/store/thunks/buyListingThunk";
 const Propular = () => {
-
+    const dispatch = useAppDispatch();
+    const { popularListings, loading } = useAppSelector((state) => state.buylisting);
+    React.useEffect(() => {
+        dispatch(getBuyPopularListings())
+    }, [])
     return <div>
         <div className="pl-7 pt-10">
             <div className="border-l-4 border-primary">
@@ -66,11 +20,18 @@ const Propular = () => {
         </div>
         <div className="flex flex-row carousel mx-4">
             {
-                NewListed.map((item, index) => (
-                    <div key={index}>
-                        <PropertyCard data={item} />
-                    </div>
-                ))
+
+                loading ? <div className="w-full justify-center items-center flex py-10">
+                    <span className="loading loading-dots loading-lg"></span>
+                </div> :
+                    popularListings.length > 0 ? popularListings.map((item, index) => (
+                        <div key={index}>
+                            <PropertyCard data={item} />
+                        </div>
+                    )) :
+                        <div className="w-full justify-center items-center flex py-10">
+                            <span>NO RECORD FOUND</span>
+                        </div>
             }
         </div>
     </div>;
