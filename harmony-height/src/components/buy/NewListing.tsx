@@ -1,62 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
+"use client"
 import React from "react";
 import PropertyCard from "./PropertyCard";
-import { PropertyCardType } from "@/schema/types/propertied/buy";
-const images: string[] = [
-    '/home3.jpg',
-    '/home2.jpg',
-    '/home1.jpg',
-];
-const images1: string[] = [
-    '/home1.jpg',
-    '/home3.jpg',
-    '/home2.jpg',
-];
-const images2: string[] = [
-    '/home1.jpg',
-    '/home2.jpg',
-    '/home3.jpg',
-];
-const NewListed: PropertyCardType[] = [
-    {
-        _id: '1',
-        address: '143 Arthur St, Sudbury Remote Area',
-        city: 'Ottawa',
-        price: '1288000',
-        bedrooms: '1',
-        bathrooms: '2',
-        area: '1130 SqFt',
-        badge: 'new',
-        images: images,
-        type: 'Residentials'
-    },
-    {
-        _id: '2',
-        address: '143 Arthur St, Sudbury Remote Area',
-        city: 'Montreal',
-        price: '1288000',
-        bedrooms: '5',
-        bathrooms: '6',
-        area: '1130 SqFt',
-        badge: 'new',
-        images: images1,
-        type: 'Residentials'
-    },
-    {
-        _id: '3',
-        address: '143 Arthur St, Sudbury Remote Area',
-        city: 'Victoria',
-        price: '1288000',
-        bedrooms: '4',
-        bathrooms: '5',
-        area: '1130 SqFt',
-        badge: 'new',
-        images: images2,
-        type: 'Residentials'
-    }
-]
-const NewListing = () => {
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { getBuyLatestListings } from "@/store/thunks/buyListingThunk";
 
+const NewListing = () => {
+    const dispatch = useAppDispatch();
+    const { latestListings, loading } = useAppSelector((state) => state.buylisting);
+    React.useEffect(() => {
+        dispatch(getBuyLatestListings())
+    }, [])
     return <div>
         <div className="px-7 pt-10">
             <div className="border-l-4 border-primary">
@@ -68,12 +22,20 @@ const NewListing = () => {
         </div>
 
         <div className="flex flex-row carousel mx-4">
+
             {
-                NewListed.map((item, index) => (
-                    <div key={item._id}>
-                        <PropertyCard data={item} />
-                    </div>
-                ))
+
+                loading ? <div className="w-full justify-center items-center flex py-10">
+                    <span className="loading loading-dots loading-lg"></span>
+                </div> :
+                    latestListings.length > 0 ? latestListings.map((item, index) => (
+                        <div key={index}>
+                            <PropertyCard data={item} />
+                        </div>
+                    )) :
+                        <div className="w-full justify-center items-center flex py-10">
+                            <span>NO RECORD FOUND</span>
+                        </div>
             }
         </div>
     </div>;
