@@ -14,13 +14,15 @@ const SideBar = forwardRef((props, ref) => {
     return (
         <div ref={ref as React.RefObject<HTMLDivElement>} className="fixed w-56 h-full bg-white shadow z-50">
             <div className="flex justify-center mt-2 mb-7">
-                <picture>
-                    <img
-                        className="w-16 h-auto"
-                        src="/harmonyheightLogo.png"
-                        alt="company logo"
-                    />
-                </picture>
+                <Link href="/">
+                    <picture>
+                        <img
+                            className="w-16 h-auto"
+                            src="/harmonyheightLogo.png"
+                            alt="company logo"
+                        />
+                    </picture>
+                </Link>
             </div>
 
             <div className="flex flex-col">

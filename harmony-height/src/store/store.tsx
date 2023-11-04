@@ -5,11 +5,14 @@ import { persistStore } from "redux-persist"
 import userAuthSlice from './reducers/userAuthSlice'
 import propertyListingSlice from './reducers/propertyListingSlice'
 import homeListingSlice from './reducers/homeListingSlice'
+import buyListingSlice from './reducers/buyListingSlice'
 const store = configureStore({
     reducer: {
         auth: userAuthSlice,
         userlistings: propertyListingSlice,
         homelisting: homeListingSlice,
+        buylisting: buyListingSlice,
+
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat(thunk, logger),
 })

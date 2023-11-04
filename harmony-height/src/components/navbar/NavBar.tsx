@@ -49,7 +49,6 @@ const NavBar = () => {
                             <summary>Category</summary>
                             <ul className="p-4">
                                 <li className={`${pathname == "/buy" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/buy">Buy</Link></li>
-                                <li className={`${pathname == "/sell" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/sell">Sell</Link></li>
                                 <li className={`${pathname == "/rent" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/rent">Rent</Link></li>
                             </ul>
                         </details>
