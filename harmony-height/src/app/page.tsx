@@ -13,7 +13,6 @@ export default function Home() {
       <Banner />
       <TabSection />
       <Slider />
-      <AutoScrollSlider />
       <Statistic />
     </main>
   )

@@ -9,8 +9,11 @@ import { Menu, Transition } from "@headlessui/react";
 import { FiSettings } from 'react-icons/fi'
 import Link from "next/link";
 import { AiOutlineLogout } from 'react-icons/ai'
+import { logout } from "@/store/reducers/userAuthSlice";
+import { useAppDispatch } from "@/store/hooks";
 
 export default function TopBar({ showNav, setShowNav }: { showNav: any, setShowNav: any }) {
+    const dispatch = useAppDispatch()
     return (
         <div
             className={`shadow-sm fixed z-20 w-full h-16 flex justify-between items-center transition-all duration-[400ms] bg-primary ${showNav ? "pl-56" : ""
@@ -60,6 +63,7 @@ export default function TopBar({ showNav, setShowNav }: { showNav: any, setShowN
 
                                 <Menu.Item>
                                     <Link
+                                        onClick={() => dispatch(logout())}
                                         href="/"
                                         className="flex hover:bg-primary hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
                                     >
