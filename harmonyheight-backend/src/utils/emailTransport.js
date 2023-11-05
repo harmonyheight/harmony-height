@@ -23,6 +23,9 @@ const sendEmail = async (userEmail, subject, htmlBody) => {
     await transport.sendMail(message);
     return true;
   } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
     return false;
   }
 };

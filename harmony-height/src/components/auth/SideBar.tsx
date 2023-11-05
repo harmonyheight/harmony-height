@@ -7,10 +7,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { TbBrandGoogleAnalytics } from 'react-icons/tb'
 import { FiSettings } from 'react-icons/fi'
 import { BiLogOutCircle } from 'react-icons/bi'
+import { useAppDispatch } from "@/store/hooks";
+import { logout } from "@/store/reducers/userAuthSlice";
 const SideBar = forwardRef((props, ref) => {
     const router = useRouter();
     const pathname = usePathname()
-
+    const dispatch = useAppDispatch();
     return (
         <div ref={ref as React.RefObject<HTMLDivElement>} className="fixed w-56 h-full bg-white shadow z-50">
             <div className="flex justify-center mt-2 mb-7">
@@ -87,7 +89,7 @@ const SideBar = forwardRef((props, ref) => {
                         </div>
                     </div>
                 </Link>
-                <Link href="/">
+                <Link href="/" onClick={() => dispatch(logout())}>
                     <div
                         className="pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors 
                             text-black hover:bg-primary hover:text-white"

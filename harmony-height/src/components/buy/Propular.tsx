@@ -9,7 +9,7 @@ const Propular = () => {
     const { popularListings, loading } = useAppSelector((state) => state.buylisting);
     React.useEffect(() => {
         dispatch(getBuyPopularListings())
-    }, [])
+    }, [dispatch])
     return <div>
         <div className="pl-7 pt-10">
             <div className="border-l-4 border-primary">

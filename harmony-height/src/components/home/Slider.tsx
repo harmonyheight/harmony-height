@@ -2,7 +2,6 @@
 "use client"
 import React from "react";
 import SliderCard from "./SliderCard";
-import { LatestListing } from "@/schema/types/homepage/homepagetypes";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { gethomeLatestListings } from "@/store/thunks/homeListingThunk";
 const Slider = () => {
@@ -10,7 +9,8 @@ const Slider = () => {
     const { latestListings } = useAppSelector((state) => state.homelisting);
     React.useEffect(() => {
         dispatch(gethomeLatestListings())
-    }, [])
+    }, [dispatch])
+    console.log("Rendering Slider component");
     return <React.Fragment>
         <div className='justify flex w-full flex-col items-center bg-yellow-50 py-4 h-full'>
 

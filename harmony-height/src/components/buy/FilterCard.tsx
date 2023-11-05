@@ -1,62 +1,73 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 "use client"
-import React, { useState } from "react";
+import React, { useRef, useState } from 'react';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+// import required modules
+import { Pagination, Navigation } from 'swiper/modules';
+
 import { AiOutlineHeart } from "react-icons/ai";
 import { LiaBedSolid, LiaPencilRulerSolid } from "react-icons/lia";
 import { PiBathtubLight } from "react-icons/pi";
 import { TbBuildingCommunity } from "react-icons/tb";
 import { GoArrowRight, GoArrowLeft } from 'react-icons/go'
-import { PropertyCardType } from "@/schema/types/propertied/buy";
 import { Listing } from "@/schema/types/properties/properties";
+import { SwiperOptions } from 'swiper/types';
 
-
-const PropertyCard = ({ data }: { data: Listing }) => {
-
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const prevSlide = () => {
-        setCurrentSlide((prevIndex) =>
-            prevIndex === 0 ? data.images.length - 1 : prevIndex - 1
-        );
+interface MySwiperOptions extends SwiperOptions {
+    lazy: boolean;
+}
+const FilterCard = ({ data }: { data: Listing }) => {
+    const swiperOptions: MySwiperOptions = {
+        lazy: true,
+        pagination: {
+            clickable: true,
+        },
+        navigation: true,
     };
 
-    const nextSlide = () => {
-        setCurrentSlide((prevIndex) =>
-            prevIndex === data.images.length - 1 ? 0 : prevIndex + 1
-        );
-    };
     return <div className="card w-96 bg-base-100 mt-5 mx-4 carousel-item rounded border p-0 cursor-pointer">
         <div className="card-body p-0">
             <figure className="h-2/3 w-full border items-center flex flex-row justify-center">
                 <div className="carousel w-fit h-72 border-b-2">
                     <div className={`carousel-item relative w-full bg-gray-100 group`} >
-                        <img src={data.images[currentSlide]} alt={data.images[currentSlide]} className="object-cover h-full w-full" />
+                        {/* <img src={data.images[currentSlide]} alt={data.images[currentSlide]} className="object-cover h-full w-full" /> */}
+                        <Swiper
+                            {...swiperOptions}
+                            modules={[Pagination, Navigation]}
+                            className="mySwiper">
+                            {
+                                data.images.map((image, index) => (
+                                    <SwiperSlide key={index}>
+                                        <img src={image}
+                                            loading="lazy" />
+                                    </SwiperSlide>
+                                )
+                                )
+                            }
+                        </Swiper>
                     </div>
                 </div>
 
-                <h1 className='absolute bg-warning top-2 left-0 px-5 rounded-br-xl rounded-tl-md '>{data.city}</h1>
-                <div className="absolute bg-primary p-1 rounded-full right-2 top-1 cursor-pointer">
+                <h1 className='absolute bg-warning top-2 left-0 px-5 rounded-br-xl rounded-tl-md z-50'>{data.city}</h1>
+                <div className="absolute bg-primary p-1 rounded-full right-2 top-1 cursor-pointer z-50">
                     <AiOutlineHeart className="text-2xl" />
                 </div>
-                {
-                    data.images.length > 1 && <>
-                        <div className="absolute bg-primary p-1 rounded-full right-2  cursor-pointer opacity-70" onClick={nextSlide}>
-                            <GoArrowRight className="text-xl" />
-                        </div>
-                        <div className="absolute bg-primary p-1 rounded-full left-2  cursor-pointer opacity-70" onClick={prevSlide}>
-                            <GoArrowLeft className="text-xl" />
-                        </div></>
-                }
             </figure>
-
             <div className="min-h-[30vh] p-3  flex justify-evenly flex-col">
                 <div className="flex justify-between">
 
                     <h2 className="card-title">
                         $ {data.price}
                     </h2>
-                    <div className="px-2 rounded-lg cursor-pointer right-2">
-                        Images:<span className="pr-1"> {currentSlide + 1}/{data.images.length}</span>
-                    </div>
+
                 </div>
                 <p className='font-extralight'>{data.zipcode},{data?.city} , {data?.state}</p>
                 <div className="card-actions justify-start items-end ">
@@ -96,4 +107,4 @@ const PropertyCard = ({ data }: { data: Listing }) => {
     </div>;
 };
 
-export default PropertyCard;
+export default FilterCard;

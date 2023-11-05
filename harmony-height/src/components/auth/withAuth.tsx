@@ -10,7 +10,7 @@ export default function withAuth(Component: any) {
             if (!user) {
                 return redirect('/login')
             }
-        })
+        }, [user])
         return <Component {...props} />
     }
 }
