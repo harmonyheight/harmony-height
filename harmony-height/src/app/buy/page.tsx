@@ -6,6 +6,7 @@ import NavBar from "@/components/navbar/NavBar";
 import React from "react";
 
 const BuyPage = () => {
+
     return <div>
         <NavBar />
         <HeroSection />

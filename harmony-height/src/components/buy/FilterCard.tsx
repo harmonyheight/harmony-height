@@ -22,11 +22,11 @@ import { Listing } from "@/schema/types/properties/properties";
 import { SwiperOptions } from 'swiper/types';
 
 interface MySwiperOptions extends SwiperOptions {
-    lazy: boolean;
+    lazy: string;
 }
 const FilterCard = ({ data }: { data: Listing }) => {
     const swiperOptions: MySwiperOptions = {
-        lazy: true,
+        lazy: "true",
         pagination: {
             clickable: true,
         },
