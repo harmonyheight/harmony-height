@@ -4,13 +4,15 @@ import React from "react";
 import PropertyCard from "./PropertyCard";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getBuyLatestListings } from "@/store/thunks/buyListingThunk";
+import { useRouter } from "next/navigation";
 
 const NewListing = () => {
     const dispatch = useAppDispatch();
     const { latestListings, loading } = useAppSelector((state) => state.buylisting);
+    const { push } = useRouter();
     React.useEffect(() => {
         dispatch(getBuyLatestListings())
-    }, [])
+    }, [dispatch])
     return <div>
         <div className="px-7 pt-10">
             <div className="border-l-4 border-primary">
@@ -38,6 +40,12 @@ const NewListing = () => {
                         </div>
             }
         </div>
+        {
+            latestListings.length > 0 &&
+            <div className="mt-4 items-center justify-center w-full flex">
+                <button className="btn btn-primary" onClick={() => push('/buy/all')}>VIEW MORE</button>
+            </div>
+        }
     </div>;
 };
 

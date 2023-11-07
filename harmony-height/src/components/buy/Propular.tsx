@@ -4,12 +4,14 @@ import React from "react";
 import PropertyCard from "./PropertyCard";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getBuyPopularListings } from "@/store/thunks/buyListingThunk";
+import { useRouter } from "next/navigation";
 const Propular = () => {
     const dispatch = useAppDispatch();
     const { popularListings, loading } = useAppSelector((state) => state.buylisting);
     React.useEffect(() => {
         dispatch(getBuyPopularListings())
     }, [dispatch])
+    const { push } = useRouter();
     return <div>
         <div className="pl-7 pt-10">
             <div className="border-l-4 border-primary">
@@ -34,6 +36,12 @@ const Propular = () => {
                         </div>
             }
         </div>
+        {
+            popularListings.length > 0 &&
+            <div className="mt-4 items-center justify-center w-full flex">
+                <button className="btn btn-primary" onClick={() => push('/buy/all')}>VIEW MORE</button>
+            </div>
+        }
     </div>;
 };
 

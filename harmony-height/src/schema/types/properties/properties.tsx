@@ -1,6 +1,6 @@
 export interface Listing {
     _id: string;
-    price?: string;
+    price?: number;
     state: string;
     city?: string;
     bathrooms: number;
@@ -53,6 +53,17 @@ export interface HomeListingsState {
 export interface BuyListingsState {
     popularListings: Listing[] | [];
     latestListings: Listing[] | [];
+    loading: boolean;
+    error: string | null;
+}
+
+export interface BuyFilterListingsState {
+    listings: {
+        listings: Listing[] | [];
+        currentPage: number | 0;
+        totalPages: number | 0;
+        totalListings: number | 0;
+    }
     loading: boolean;
     error: string | null;
 }

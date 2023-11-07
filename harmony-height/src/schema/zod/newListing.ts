@@ -5,10 +5,7 @@ const minYear = 1900; // You can adjust this to your desired minimum year.
 export const newListingSchema = z.object({
   state: z.string().min(2, { message: 'Please select state' }).default(''),
   city: z.string().min(0, { message: 'Please select city' }).default(''),
-  price: z
-    .string()
-    .min(1, { message: 'Please please enter price' })
-    .default(''),
+  price: z.number().min(1, { message: 'Please please enter price' }).default(0),
   bathrooms: z.string().refine(
     (value) => {
       const numberValue = Number(value);

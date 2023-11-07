@@ -3,18 +3,11 @@ import SearchBar from "@/components/buy/SearchBar";
 import NavBar from "@/components/navbar/NavBar";
 import React from "react";
 
-const PropertyPage = ({
-    params: { property }
-}: {
-    params: {
-        property: string
-    }
-}) => {
+const PropertyPage = () => {
     return <div>
         <NavBar />
         <SearchBar />
         <FilterData />
-        PropertyPage {property}
     </div>;
 };
 
