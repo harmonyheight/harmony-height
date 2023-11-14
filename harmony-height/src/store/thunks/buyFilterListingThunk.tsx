@@ -7,7 +7,8 @@ export const getPaginationBuyFilterListings = createAsyncThunk('buyfilter/pagina
         page: number,
         limit: number,
         minPrice?: number,
-        maxPrice?: number
+        maxPrice?: number,
+        search: string
     }, { rejectWithValue }) => {
         try {
             const response = await axiosInstance.get('/buy/listings/filterdata', {
@@ -15,10 +16,11 @@ export const getPaginationBuyFilterListings = createAsyncThunk('buyfilter/pagina
                     page: data.page,
                     limit: data.limit, // Adjust the limit as needed
                     minPrice: data.minPrice,
-                    maxPrice: data.maxPrice
+                    maxPrice: data.maxPrice,
+                    search: data.search
                 }
             });
-            toast.success(response.data?.message)
+            // toast.success(response.data?.message)
             return response.data?.listings;
         } catch (error: any) {
             toast.error(error.response?.data?.error)

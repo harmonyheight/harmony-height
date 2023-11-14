@@ -14,9 +14,6 @@ const NavBar = () => {
         dispatch(logout());
         push("/login")
     }
-    console.log('====================================');
-    console.log(pathname);
-    console.log('====================================');
     return (
 
         <div className="navbar bg-base-100 shadow-sm rounded-sm">
@@ -31,7 +28,6 @@ const NavBar = () => {
                             <a>Category</a>
                             <ul className="p-2">
                                 <li className={`${pathname == "/buy" ? "bg-primary rounded-md  text-white" : ""}`}><Link href="/buy">Buy</Link></li>
-                                <li className={`${pathname == "/sell" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/sell">Sell</Link></li>
                                 <li className={`${pathname == "/rent" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/rent">Rent</Link></li>
                             </ul>
                         </li>
