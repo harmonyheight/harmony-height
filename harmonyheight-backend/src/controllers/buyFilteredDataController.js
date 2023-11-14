@@ -9,9 +9,6 @@ const buyfilteredListing = async (req, res) => {
     const filter = {
       type: 'Sell',
     };
-    console.log('====================================');
-    console.log(req.query.minPrice, req.query.maxPrice);
-    console.log('====================================');
     // Check if minPrice and maxPrice query parameters are provided
     if (req.query.minPrice && req.query.maxPrice) {
       // Add price range conditions to the filter
@@ -20,9 +17,13 @@ const buyfilteredListing = async (req, res) => {
         $lte: parseInt(req.query.maxPrice),
       };
     }
-    console.log('====================================');
-    console.log(filter);
-    console.log('====================================');
+    if (req.query.search) {
+      const searchRegex = new RegExp(req.query.search, 'i'); // Case-insensitive substring search
+      filter.$or = [
+        { state: { $regex: searchRegex } },
+        { city: { $regex: searchRegex } },
+      ];
+    }
     // Create a promise to retrieve listings with pagination
     const listingsPromise = Listings.find(filter)
       .skip((page - 1) * limit)

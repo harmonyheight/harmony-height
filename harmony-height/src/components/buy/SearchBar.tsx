@@ -4,11 +4,13 @@ import { getPaginationBuyFilterListings } from "@/store/thunks/buyFilterListingT
 import React from "react";
 
 const SearchBar = () => {
-
     const dispatch = useAppDispatch();
     const { listings, loading } = useAppSelector((state) => state.buyfilterlisting);
     const [currentPage, setCurrentPage] = React.useState(1);
     const [itemsPerPage, setItemsPerPage] = React.useState(3); // Number of items per page
+    const [rangeValue, setChangeRangeValue] = React.useState(0);
+    const [searchValue, setSearchValue] = React.useState('');
+
     const [price, setPrice] = React.useState({
         minPrice: 0,
         maxPrice: 100000000
@@ -20,36 +22,45 @@ const SearchBar = () => {
     };
     const handleRangeChange = (event: any) => {
         const newValue = parseInt(event.target.value, 10); // Convert the value to an integer
-        let minPrice, maxPrice;
-
+        setChangeRangeValue(newValue)
         switch (newValue) {
             case 0:
-                minPrice = 0;
-                maxPrice = 100000;
+                setPrice({
+                    minPrice: 0,
+                    maxPrice: 100000000
+                })
                 break;
             case 25:
-                minPrice = 100001;
-                maxPrice = 200000;
+                setPrice({
+                    minPrice: 100001,
+                    maxPrice: 200000
+                })
                 break;
             case 50:
-                minPrice = 200001;
-                maxPrice = 300000;
+                setPrice({
+                    minPrice: 200001,
+                    maxPrice: 300000
+                })
                 break;
             case 75:
-                minPrice = 300001;
-                maxPrice = 400000;
+                setPrice({
+                    minPrice: 300001,
+                    maxPrice: 400000
+                })
                 break;
             case 100:
-                minPrice = 400001;
-                maxPrice = 100000000;
+                setPrice({
+                    minPrice: 400001,
+                    maxPrice: 100000000
+                })
+                break;
             default:
-                minPrice = 0;
-                maxPrice = 100000000; // Adjust the maximum price as needed
+                setPrice({
+                    minPrice: 0,
+                    maxPrice: 100000000
+                }) // Adjust the maximum price as needed
         }
-        setPrice({
-            minPrice,
-            maxPrice
-        })
+
         setCurrentPage(1)
     };
     const handleReset = () => {
@@ -59,15 +70,18 @@ const SearchBar = () => {
             minPrice: 0,
             maxPrice: 100000000
         })
+        setChangeRangeValue(0)
+        setSearchValue('')
     }
     React.useEffect(() => {
         dispatch(getPaginationBuyFilterListings({
             page: currentPage,
             limit: itemsPerPage,
             maxPrice: price.maxPrice,
-            minPrice: price.minPrice
+            minPrice: price.minPrice,
+            search: searchValue
         }))
-    }, [currentPage, dispatch, itemsPerPage, price.maxPrice, price.minPrice])
+    }, [currentPage, dispatch, itemsPerPage, price.maxPrice, price.minPrice, searchValue])
 
     return (
         <div>
@@ -79,12 +93,8 @@ const SearchBar = () => {
                         <div className="join">
                             <div>
                                 <div>
-
-                                    <input className="input input-bordered join-item w-[30vw]" placeholder="Search" />
+                                    <input className="input input-bordered join-item w-[30vw]" placeholder="Search by state or city" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
                                 </div>
-                            </div>
-                            <div className="indicator">
-                                <button className="btn join-item">Search</button>
                             </div>
                         </div>
                     </div>
@@ -98,6 +108,7 @@ const SearchBar = () => {
                         max={100}
                         className="range my-3"
                         step={25}
+                        value={rangeValue}
                         onChange={handleRangeChange}
                     />
                     <div className="w-full flex justify-between text-xs px-2">
@@ -116,7 +127,7 @@ const SearchBar = () => {
                 </div>
                 <div className="join">
                     <button className="join-item  btn" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1 || loading}>«</button>
-                    <button className="join-item px-2">Page {currentPage} out {listings.totalPages}</button>
+                    <button className="join-item px-2">Page {currentPage}</button>
                     <button className="join-item btn btn-primary" onClick={() => setCurrentPage(currentPage + 1)} disabled={listings.listings.length < itemsPerPage || listings.totalPages == currentPage || loading}>»</button>
                 </div>
                 <select className="select select-bordered select-sm w-full max-w-xs" onChange={handleSelectChange} defaultValue={itemsPerPage}>
