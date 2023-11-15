@@ -3,7 +3,8 @@ import NewListing from "@/components/buy/NewListing";
 import Propular from "@/components/buy/Propular";
 import Slides from "@/components/buy/Slides";
 import NavBar from "@/components/navbar/NavBar";
-import React from "react";
+import React, { Suspense } from "react";
+import BuyLoading from "./loading";
 
 const BuyPage = () => {
 
@@ -13,10 +14,12 @@ const BuyPage = () => {
         <div className="px-4 rounded-lg overflow-hidden my-5">
             <Slides />
         </div>
-        <Propular />
-        <div className="w-full h-2/3">
-            <NewListing />
-        </div>
+        <Suspense fallback={<BuyLoading />}>
+            <Propular />
+            <div className="w-full h-2/3">
+                <NewListing />
+            </div>
+        </Suspense>
     </div>;
 };
 
