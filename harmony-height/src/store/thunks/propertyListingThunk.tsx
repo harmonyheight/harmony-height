@@ -63,10 +63,8 @@ export const getUserListings = createAsyncThunk('listing/getuserlisting',
     }, { rejectWithValue }) => {
         try {
             const response = await axiosUserInstance.get(`/user-listings?page=${credentials.page}&itemsPerPage=${credentials.itemsPerPage}`);
-            toast.success(response.data?.message)
             return response.data;
         } catch (error: any) {
-            toast.error(error.response?.data?.error)
 
             return rejectWithValue(error.response?.data?.error);
         }
@@ -77,11 +75,8 @@ export const deleteUserListing = createAsyncThunk('listing/deleteUserListing',
     async (credentials: { listingId: string, images: string[] }, { rejectWithValue }) => {
         try {
             const response = await axiosUserInstance.post('/listings/deletebyid', credentials);
-            toast.success(response.data?.message)
             return response.data;
         } catch (error: any) {
-            toast.error(error.response?.data?.error)
-
             return rejectWithValue(error.response?.data?.error);
         }
     })
