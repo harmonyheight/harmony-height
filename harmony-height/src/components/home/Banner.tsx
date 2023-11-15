@@ -2,7 +2,7 @@
 import React from "react";
 const Banner = () => {
     const calculateTimeLeft = () => {
-        const difference = +new Date('2023-10-27T23:59:59') - +new Date();
+        const difference = +new Date('2023-11-25T23:59:59') - +new Date();
         if (difference < 0) {
             return { days: 0, hours: 0, minutes: 0, seconds: 0 };
         }
@@ -28,32 +28,32 @@ const Banner = () => {
     });
     return <div className="flex justify-evenly items-center bg-accent max-md:flex-col">
         <div className="shadow-lg text-white text-center bg-primary py-2 px-6 rounded-lg">
-            WORKING ON SPRINT 2 ANNOUNCEMENT
+            WORKING ON SPRINT 3 ANNOUNCEMENT
         </div>
         <div className="flex gap-5 bg-accent rounded py-3 items-center justify-center">
 
 
             <div className=" text-white">
                 <span className="countdown font-mono text-4xl text-white">
-                    <span id="counterElement" style={{ "--value": timeLeft.days }}></span>
+                    <span id="counterElement" style={{ "--value": timeLeft.days } as React.CSSProperties}></span>
                 </span>
                 days
             </div>
             <div className=" text-white">
                 <span className="countdown font-mono text-4xl  text-white">
-                    <span style={{ "--value": timeLeft.hours }}></span>
+                    <span style={{ "--value": timeLeft.hours } as React.CSSProperties}></span>
                 </span>
                 hours
             </div>
             <div className=" text-white">
                 <span className="countdown font-mono text-4xl  text-white">
-                    <span style={{ "--value": timeLeft.minutes }}></span>
+                    <span style={{ "--value": timeLeft.minutes } as React.CSSProperties}></span>
                 </span>
                 min
             </div>
             <div className=" text-white">
                 <span className="countdown font-mono text-4xl  text-white">
-                    <span style={{ "--value": timeLeft.seconds }}></span>
+                    <span style={{ "--value": timeLeft.seconds } as React.CSSProperties}></span>
                 </span>
                 sec
             </div>

@@ -13,9 +13,17 @@ const TabSection = () => {
     }
     return (
         <div className="flex justify-evenly items-center bg-lime-50 flex-col rounded-md py-20 h-screen">
-            <div className="lg:text-6xl font-extrabold pb-16 md:text-5xl sm:text-4xl">Be a Real Estate Know-It-All</div>
-            <div className="text-xl">Make your best real estate decisions with the latest listings</div>
-            <div className="text-xl pb-10"> property insights and the right realtor for you.</div>
+            <div className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold pb-16">
+                Be a Real Estate Know It All
+            </div>
+
+            <div className="text-xl w-full sm:w-4/5 md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2 mx-auto my-4">
+                <div className="text-xl">
+                    <center>
+                        Make your best real estate decisions with the latest listings property insights and the right realtor for you.
+                    </center>
+                </div>
+            </div>
             <div className=" w-[90%] rounded-md shadow-2xl overflow-hidden sm:w-[90%]">
                 <div className="bg-primary flex flex-row w-full">
                     <div className={`${tab == "sell" ? "bg-white" : "bg-primary text-white"}  w-1/3 py-5 items-center justify-center flex cursor-pointer`} onClick={() => setTab("sell")}>

@@ -56,6 +56,12 @@ export interface BuyListingsState {
     loading: boolean;
     error: string | null;
 }
+export interface RentListingsState {
+    popularListings: Listing[] | [];
+    latestListings: Listing[] | [];
+    loading: boolean;
+    error: string | null;
+}
 
 export interface BuyFilterListingsState {
     listings: {
