@@ -1,6 +1,7 @@
 import { BuyFilterListingsState } from "@/schema/types/properties/properties";
 import { createSlice } from "@reduxjs/toolkit";
 import { getPaginationBuyFilterListings } from "../thunks/buyFilterListingThunk";
+import { getPaginationRentFilterListings } from "../thunks/rentFilterListingThunk";
 const initialState: BuyFilterListingsState = {
     listings: {
         listings: [],
@@ -25,6 +26,19 @@ const buyFilterSlice = createSlice({
                 state.error = null,
                 state.listings = action.payload
         }).addCase(getPaginationBuyFilterListings.rejected, (state, action: any) => {
+            state.loading = false,
+                state.listings = initialState.listings,
+                state.error = action.payload
+        })
+        builder.addCase(getPaginationRentFilterListings.pending, (state) => {
+            state.loading = true;
+            state.error = null
+        })
+        builder.addCase(getPaginationRentFilterListings.fulfilled, (state, action) => {
+            state.loading = false,
+                state.error = null,
+                state.listings = action.payload
+        }).addCase(getPaginationRentFilterListings.rejected, (state, action: any) => {
             state.loading = false,
                 state.listings = initialState.listings,
                 state.error = action.payload

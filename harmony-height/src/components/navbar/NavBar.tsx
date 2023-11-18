@@ -31,6 +31,8 @@ const NavBar = () => {
                                 <li className={`${pathname == "/rent" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/rent">Rent</Link></li>
                             </ul>
                         </li>
+                        {/* mortgage */}
+                        <li className={`${pathname == "/mortgage" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/mortgage">Mortgage</Link></li>
                         <li className={`${pathname == "/contactus" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/contactus">Contact Us</Link></li>
                     </ul>
                 </div>
@@ -49,6 +51,7 @@ const NavBar = () => {
                             </ul>
                         </details>
                     </li>
+                    <li className={`${pathname == "/mortgage" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/mortgage">Mortgage</Link></li>
                     <li className={`${pathname == "/contactus" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/contactus">Contact Us</Link></li>
                 </ul>
             </div>

@@ -5,6 +5,7 @@ import NavBar from "@/components/navbar/NavBar";
 import Facilities from "@/components/rent/Facilities";
 import HeroSectionRent from "@/components/rent/HeroSectionRent";
 import PopularRenting from "@/components/rent/PopularRenting";
+import RentingNewListing from "@/components/rent/RentingNewListing";
 import React from "react";
 
 const RentPage = () => {
@@ -16,6 +17,7 @@ const RentPage = () => {
         </div> */}
         <Facilities />
         <PopularRenting />
+        <RentingNewListing />
     </div>;
 };
 

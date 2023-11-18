@@ -1,9 +1,10 @@
 "use client"
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getPaginationBuyFilterListings } from "@/store/thunks/buyFilterListingThunk";
+import { getPaginationRentFilterListings } from "@/store/thunks/rentFilterListingThunk";
 import React from "react";
 
-const SearchBar = () => {
+const SearchBar = ({ type }: { type: string }) => {
     const dispatch = useAppDispatch();
     const { listings, loading } = useAppSelector((state) => state.buyfilterlisting);
     const [currentPage, setCurrentPage] = React.useState(1);
@@ -74,14 +75,24 @@ const SearchBar = () => {
         setSearchValue('')
     }
     React.useEffect(() => {
-        dispatch(getPaginationBuyFilterListings({
-            page: currentPage,
-            limit: itemsPerPage,
-            maxPrice: price.maxPrice,
-            minPrice: price.minPrice,
-            search: searchValue
-        }))
-    }, [currentPage, dispatch, itemsPerPage, price.maxPrice, price.minPrice, searchValue])
+        if (type == "rent") {
+            dispatch(getPaginationRentFilterListings({
+                page: currentPage,
+                limit: itemsPerPage,
+                maxPrice: price.maxPrice,
+                minPrice: price.minPrice,
+                search: searchValue
+            }))
+        } else {
+            dispatch(getPaginationBuyFilterListings({
+                page: currentPage,
+                limit: itemsPerPage,
+                maxPrice: price.maxPrice,
+                minPrice: price.minPrice,
+                search: searchValue
+            }))
+        }
+    }, [currentPage, dispatch, itemsPerPage, price.maxPrice, price.minPrice, searchValue, type])
 
     return (
         <div>
