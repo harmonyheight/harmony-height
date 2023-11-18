@@ -2,7 +2,7 @@
 const Customer = require('../models/Customer');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { generateVerificationCode } = require('../utils/utils');
+const { generateVerificationCode, decrypt } = require('../utils/utils');
 const { sendVerificationCodeEmail } = require('../utils/nodeMailerUtils');
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -12,7 +12,11 @@ exports.login = async (req, res) => {
     if (!customer) {
       return res.status(404).json({ message: 'User account not found' });
     }
-    const isPasswordCorrect = await bcrypt.compare(password, customer.password);
+    const decryptedPassword = decrypt(password);
+    const isPasswordCorrect = await bcrypt.compare(
+      decryptedPassword,
+      customer.password,
+    );
     if (!isPasswordCorrect) {
       return res.status(401).json({ message: 'Invalid Credientials' });
     }
@@ -69,9 +73,10 @@ exports.register = async (req, res) => {
   const { email, name, password } = req.body;
   try {
     const verificationCode = generateVerificationCode();
+    const decryptedPassword = decrypt(password);
     const newCustomer = new Customer({
       email,
-      password,
+      password: decryptedPassword,
       name,
       verificationCode,
     });

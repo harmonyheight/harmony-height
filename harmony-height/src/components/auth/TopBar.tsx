@@ -10,10 +10,11 @@ import { FiSettings } from 'react-icons/fi'
 import Link from "next/link";
 import { AiOutlineLogout } from 'react-icons/ai'
 import { logout } from "@/store/reducers/userAuthSlice";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function TopBar({ showNav, setShowNav }: { showNav: any, setShowNav: any }) {
     const dispatch = useAppDispatch()
+    const { user } = useAppSelector(state => state.auth)
     return (
         <div
             className={`shadow-sm fixed z-20 w-full h-16 flex justify-between items-center transition-all duration-[400ms] bg-primary ${showNav ? "pl-56" : ""
@@ -32,8 +33,8 @@ export default function TopBar({ showNav, setShowNav }: { showNav: any, setShowN
                         <Menu.Button className="inline-flex w-full justify-center items-center">
                             <div className="w-10 rounded-full">
                                 <div className="avatar placeholder">
-                                    <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
-                                        <span className="text-base uppercase">A</span>
+                                    <div className="bg-white text-neutral-content rounded-full w-10">
+                                        <span className="text-base uppercase">{user?.name[0]}</span>
                                     </div>
                                 </div>
                             </div>

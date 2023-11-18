@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 const RegisterPage = () => {
     const [isVerify, setIsVerify] = useState(true);
+    const [userEmail, setUserEmail] = useState('');
     const {
         register,
         handleSubmit,
@@ -22,6 +23,7 @@ const RegisterPage = () => {
     const onSubmit: SubmitHandler<registerFormData> = async (data) => {
         await dispatch(userRegisterAsync(data)).unwrap().then((originalPromiseResult) => {
             setIsVerify(false);
+            setUserEmail(originalPromiseResult?.user?.email)
             if (originalPromiseResult.isEmailVerified) {
                 push("/login");
             }
@@ -65,7 +67,7 @@ const RegisterPage = () => {
                                 <div className="text-blue-800 cursor-pointer pt-3" onClick={handleLoginPageNavigate}>Already have an account? Login</div>
                             </div>
                         </form> :
-                        <EmailVerification routeName="register" />
+                        <EmailVerification routeName="login" userEmail={userEmail} />
                     }
                 </div>
             </div>

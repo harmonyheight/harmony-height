@@ -1,16 +1,13 @@
 "use client"
 import { verificationCodeSchema, verificationFormData } from "@/schema/zod/login";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { emailVerifyAsync } from "@/store/thunks/userAuthThunk";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-const EmailVerification = ({ routeName }: { routeName: string }) => {
-    console.log('====================================');
-    console.log("routeName: ", routeName);
-    console.log('====================================');
+const EmailVerification = ({ routeName, userEmail }: { routeName: string, userEmail: string }) => {
     const {
         register,
         handleSubmit,
@@ -19,12 +16,11 @@ const EmailVerification = ({ routeName }: { routeName: string }) => {
         resolver: zodResolver(verificationCodeSchema),
     });
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector(state => state.auth)
     const { push } = useRouter();
     const onSubmit: SubmitHandler<verificationFormData> = async (data) => {
 
         await dispatch(emailVerifyAsync({
-            email: user?.email,
+            email: userEmail,
             code: data.verificationCode
         }));
         if (routeName === "login") {

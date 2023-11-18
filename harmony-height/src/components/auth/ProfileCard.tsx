@@ -28,7 +28,7 @@ const ProfileCard = () => {
                     <span className="capitalize font-extralight">Status: {user?.isEmailVerified ? "verifried" : "unverifried"}</span>
                 </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
                 <div className="stats shadow bg-orange-300">
                     <div className="stat">
                         <div className="stat-figure text-accent text-5xl">
