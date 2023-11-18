@@ -48,7 +48,7 @@ function Form() {
     }
 
     return (
-        <form onSubmit={(e) => e.preventDefault()} className="flex flex-col lg:flex-row justify-center items-start">
+        <form onSubmit={(e) => e.preventDefault()} className="flex flex-col lg:flex-row justify-center items-center lg:items-start">
 
             <div className="lg:flex lg:space-x-8">
                 <div>
@@ -107,14 +107,16 @@ function Form() {
                 <div className="my-4">
                     <h2 className="text-2xl font-semibold uppercase">Calculations Summary</h2>
                 </div>
+                <div>
 
-                <button
+                    <button
 
-                    onClick={handleReset}
-                    className="btn btn-secondary"
-                >
-                    Reset
-                </button>
+                        onClick={handleReset}
+                        className="btn btn-secondary"
+                    >
+                        Reset
+                    </button>
+                </div>
 
                 <div className="stats shadow my-3">
                     <div className="stats">
@@ -151,7 +153,7 @@ function Form() {
 
                     <div className="stats shadow">
                         <div className="stat">
-                            <div className="stat-value text-lg">{loanDuration ? loanDuration : 0}%</div>
+                            <div className="stat-value text-lg">{loanDuration ? `${loanDuration} years` : 0} </div>
                         </div>
                     </div>
                 </div>
