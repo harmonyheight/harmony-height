@@ -41,8 +41,8 @@ const userAuthSlice = createSlice({
         })
         builder.addCase(userRegisterAsync.fulfilled, (state, action) => {
             state.loading = false,
-                state.error = null,
-                state.user = action.payload?.user
+                state.error = null
+            // state.user = action.payload?.user
         }).addCase(userRegisterAsync.rejected, (state, action: any) => {
             state.loading = false,
                 state.user = null,

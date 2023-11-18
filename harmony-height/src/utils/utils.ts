@@ -1,3 +1,9 @@
+import Cryptr from 'cryptr';
+const cryptr = new Cryptr('super-secret-key', {
+  encoding: 'base64',
+  pbkdf2Iterations: 10000,
+  saltLength: 10,
+});
 export const sellCountListing = (countListingByMonth: any[]) => {
   var count = countListingByMonth.reduce((accumaltor, x) => {
     return accumaltor + x.forSale;
@@ -11,3 +17,11 @@ export const rentCountListing = (countListingByMonth: any[]) => {
   }, 0);
   return count;
 };
+
+export function encrypt(password: string) {
+  return cryptr.encrypt(password);
+}
+
+export function decrypt(password: string) {
+  return cryptr.decrypt(password);
+}

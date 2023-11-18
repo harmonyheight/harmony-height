@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^1.9.6",
     "@types/redux-logger": "^3.0.10",
     "axios": "^1.5.1",
+    "cryptr": "^6.3.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",

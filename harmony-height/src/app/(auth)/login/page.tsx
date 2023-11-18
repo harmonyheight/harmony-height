@@ -19,11 +19,14 @@ const LoginPage = () => {
         resolver: zodResolver(loginSchema),
     });
     const [isVerify, setIsVerify] = useState(true);
+    const [userEmail, setUserEmail] = useState('');
     const dispatch = useAppDispatch();
     const { push } = useRouter();
+
     const onSubmit: SubmitHandler<loginFormData> = async (data) => {
         await dispatch(userLoginAsync(data)).unwrap().then((originalPromiseResult) => {
             // handle result here
+            setUserEmail(originalPromiseResult?.user?.email)
             if (originalPromiseResult?.user?.isEmailVerified) {
                 push("/")
             }
@@ -66,7 +69,7 @@ const LoginPage = () => {
                                     <div className="text-blue-800 cursor-pointer pt-3" onClick={handleRegisterPageNavigate}>Don't have account? Register</div>
                                 </div>
                             </form> :
-                            <EmailVerification routeName="login" />
+                            <EmailVerification routeName="login" userEmail={userEmail} />
                     }
                 </div>
             </div>
