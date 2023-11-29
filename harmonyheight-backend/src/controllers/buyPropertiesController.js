@@ -37,12 +37,10 @@ const latestListing = async (req, res) => {
       .populate('user', 'name email')
       .exec();
     if (recentListings.length > 0) {
-      return res
-        .status(200)
-        .json({
-          message: 'latest selling listing fetched',
-          listings: recentListings,
-        });
+      return res.status(200).json({
+        message: 'latest selling listing fetched',
+        listings: recentListings,
+      });
     }
     return res.status(404).json({
       error: 'No recent listing found',
@@ -53,7 +51,25 @@ const latestListing = async (req, res) => {
   }
 };
 
+const getPropertyById = async (req, res) => {
+  const id = req.params.id;
+  console.log('--->', id);
+  try {
+    const property = await Listings.findById(id).populate('user', 'name email');
+
+    if (!property) {
+      return res.status(404).json({ error: 'Property not found' });
+    }
+
+    res.status(200).json({ property, message: 'Proper fetch successfully' });
+  } catch (error) {
+    console.error('Error getting property by ID:', error.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 module.exports = {
   popularListing,
   latestListing,
+  getPropertyById,
 };

@@ -4,7 +4,8 @@ export interface User {
     name: string;
     __v?: number;
     isEmailVerified: boolean;
-    isAdmin: boolean
+    isAdmin: boolean,
+    stripeAccountId?: string
 }
 
 export interface UserAuthState {

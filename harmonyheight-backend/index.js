@@ -20,6 +20,7 @@ app.use('/api', routes.propertyListingRoutes);
 app.use('/api', routes.homeRoutes);
 app.use('/api', routes.buyRoutes);
 app.use('/api', routes.rentRoutes);
+app.use('/api', routes.stripeRoutes);
 
 connectToMongoDB().then(() =>
   app.listen(process.env.PORT, () =>

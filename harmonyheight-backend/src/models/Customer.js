@@ -28,6 +28,10 @@ const customerSchema = new Schema({
     type: String,
     required: true,
   },
+  stripeAccountId: {
+    type: String,
+    default: '',
+  },
   isAdmin: {
     type: String,
     default: false,

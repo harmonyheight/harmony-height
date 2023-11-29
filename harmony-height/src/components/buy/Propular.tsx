@@ -5,9 +5,11 @@ import PropertyCard from "./PropertyCard";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getBuyPopularListings } from "@/store/thunks/buyListingThunk";
 import { useRouter } from "next/navigation";
+
 const Propular = () => {
     const dispatch = useAppDispatch();
     const { popularListings, loading } = useAppSelector((state) => state.buylisting);
+
     React.useEffect(() => {
         dispatch(getBuyPopularListings())
     }, [dispatch])
@@ -27,7 +29,7 @@ const Propular = () => {
                     <span className="loading loading-dots loading-lg"></span>
                 </div> :
                     popularListings.length > 0 ? popularListings.map((item, index) => (
-                        <div key={index}>
+                        <div key={index} onClick={() => push(`/buy/all/${item._id}`)}>
                             <PropertyCard data={item} />
                         </div>
                     )) :

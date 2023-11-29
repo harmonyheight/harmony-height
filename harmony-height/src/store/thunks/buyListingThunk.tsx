@@ -21,4 +21,16 @@ export const getBuyLatestListings = createAsyncThunk('buy/getlatestlisting',
 
             return rejectWithValue(error.response?.data?.error);
         }
+    })
+export const getBuyistingsDetail = createAsyncThunk('buy/getdetailbyid',
+    async (credientials: {
+        id: string
+    }, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.get(`/buy/listings/detail/${credientials.id}`);
+            return response.data;
+        } catch (error: any) {
+
+            return rejectWithValue(error.response?.data?.error);
+        }
     })    
