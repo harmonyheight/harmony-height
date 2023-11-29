@@ -38,7 +38,7 @@ const NavBar = () => {
                 </div>
                 <a className="btn btn-ghost normal-case text-xl" onClick={() => push('/')}>Harmony Height</a>
             </div>
-            <div className="navbar-center hidden lg:flex">
+            <div className="navbar-center hidden lg:flex  z-[100000]">
                 <ul className="menu menu-horizontal px-1">
                     <li className={`${pathname == "/" ? "bg-primary rounded-md text-white" : ""}`}><Link href="/">Home</Link></li>
                     <li tabIndex={0}>
@@ -57,7 +57,7 @@ const NavBar = () => {
             </div>
             <div className="navbar-end">
                 {
-                    user ? <div className="dropdown dropdown-end">
+                    user ? <div className="dropdown dropdown-end z-[100000]">
                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
                                 <div className="avatar placeholder">

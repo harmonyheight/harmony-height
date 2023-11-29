@@ -55,10 +55,7 @@ const getPropertyById = async (req, res) => {
   const id = req.params.id;
   console.log('--->', id);
   try {
-    const property = await Listings.findById(id)
-      .where('type')
-      .equals('Sell')
-      .populate('user', 'name email');
+    const property = await Listings.findById(id).populate('user', 'name email');
 
     if (!property) {
       return res.status(404).json({ error: 'Property not found' });

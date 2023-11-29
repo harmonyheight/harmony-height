@@ -1,11 +1,14 @@
+'use client'
 import React from "react";
 import { LiaBedSolid } from "react-icons/lia"
 import { PiBathtubLight } from "react-icons/pi"
 import { LiaPencilRulerSolid } from "react-icons/lia"
 import { Listing } from "@/schema/types/properties/properties";
+import { useRouter } from "next/navigation";
 const SliderCard = ({ list }: { list: Listing }) => {
+    const { push } = useRouter()
     return (
-        <div className="carousel-item">
+        <div className="carousel-item cursor-pointer" onClick={() => list.type == "rent" ? push(`/rent/all/${list._id}`) : push(`/buy/all/${list._id}`)}>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <figure >
                     <img src={`${list.images[0]}`} alt="Shoes" />

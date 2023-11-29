@@ -31,7 +31,7 @@ const NewListing = () => {
                     <span className="loading loading-dots loading-lg"></span>
                 </div> :
                     latestListings.length > 0 ? latestListings.map((item, index) => (
-                        <div key={index}>
+                        <div key={index} onClick={() => push(`/buy/all/${item._id}`)}>
                             <PropertyCard data={item} />
                         </div>
                     )) :

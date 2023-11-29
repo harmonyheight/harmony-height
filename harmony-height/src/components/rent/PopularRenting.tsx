@@ -27,7 +27,7 @@ const PopularRenting = () => {
                     <span className="loading loading-dots loading-lg"></span>
                 </div> :
                     popularListings.length > 0 ? popularListings.map((item, index) => (
-                        <div key={index}>
+                        <div key={index} onClick={() => push(`/rent/all/${item._id}`)}>
                             <PropertyCard data={item} />
                         </div>
                     )) :
