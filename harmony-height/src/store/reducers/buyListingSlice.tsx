@@ -1,9 +1,10 @@
 import { BuyListingsState } from "@/schema/types/properties/properties";
 import { createSlice } from "@reduxjs/toolkit";
-import { getBuyLatestListings, getBuyPopularListings } from "../thunks/buyListingThunk";
+import { getBuyLatestListings, getBuyPopularListings, getBuyistingsDetail } from "../thunks/buyListingThunk";
 const initialState: BuyListingsState = {
     popularListings: [],
     latestListings: [],
+    propertyDetail: null,
     loading: false,
     error: null,
 };
@@ -37,6 +38,19 @@ const buyListingSlice = createSlice({
             state.loading = false,
                 state.latestListings = [],
                 state.error = action.payload
+        })
+        builder.addCase(getBuyistingsDetail.pending, (state) => {
+            state.loading = true;
+            state.error = null
+        })
+        builder.addCase(getBuyistingsDetail.fulfilled, (state, action) => {
+            state.loading = false,
+                state.error = null,
+                state.propertyDetail = action.payload?.property
+        }).addCase(getBuyistingsDetail.rejected, (state, action: any) => {
+            state.loading = false,
+                state.latestListings = [],
+                state.error = action.payload?.error
         })
     },
 });

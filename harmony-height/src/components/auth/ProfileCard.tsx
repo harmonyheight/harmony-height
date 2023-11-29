@@ -2,15 +2,29 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getUserListingTypeCountAsync } from "@/store/thunks/propertyListingThunk";
 import React from "react";
+import { MdOutlineCreditCardOff } from "react-icons/md";
+import { MdOutlineCreditScore } from "react-icons/md";
 import { BsFillHeartFill, BsFillBuildingsFill } from 'react-icons/bs'
 import { GiHouseKeys } from 'react-icons/gi'
+import axiosUserInstance from "@/store/api/axiosUserInstance";
 const ProfileCard = () => {
     const { user } = useAppSelector(state => state.auth)
     const { userListingTypeCount, loading } = useAppSelector(state => state.userlistings)
     const dispatch = useAppDispatch();
     React.useEffect(() => {
         dispatch(getUserListingTypeCountAsync())
-    }, [])
+    }, [dispatch])
+    const handleConnect = async () => {
+        try {
+            const response = await axiosUserInstance.get('/connect');
+
+            console.log('Stripe account connected:', response.data);
+            // Redirect to the provided account link URL or handle it in your application
+            window.location.href = response.data.accountLink;
+        } catch (error: any) {
+            console.error('Error connecting Stripe account:', error.message);
+        }
+    }
     return (
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-3 mt-5 p-5 md:grid-cols-1">
             <div className="rounded-sm flex flex-row p-5 shadow-sm">
@@ -26,6 +40,31 @@ const ProfileCard = () => {
                     <span className="capitalize font-semibold text-base">{user?.name}</span>
                     <span className="capitalize font-extralight">{user?.email}</span>
                     <span className="capitalize font-extralight">Status: {user?.isEmailVerified ? "verifried" : "unverifried"}</span>
+                </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 gap-4 mt-4">
+                <div className="stats shadow bg-blue-50">
+                    {
+                        user?.stripeAccountId ?
+
+                            <div className="stat">
+                                <div className="stat-figure text-accent text-5xl">
+                                    <MdOutlineCreditScore />
+                                </div>
+                                <div className="stat-title">Stripe Payment</div>
+                                <div className="stat-desc">Account ID: {user?.stripeAccountId}</div>
+                            </div>
+                            :
+                            <div className="stat">
+                                <div className="stat-figure text-accent text-5xl">
+                                    <MdOutlineCreditCardOff />
+                                </div>
+                                <div className="stat-title">Stripe Payment</div>
+                                <div className="stat-value"> <button className="btn btn-xs btn-primary px-10 mt-3" onClick={handleConnect}>Account Enable</button></div>
+                            </div>
+
+
+                    }
                 </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">

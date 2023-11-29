@@ -9,5 +9,5 @@ router.get(
   '/buy/listings/filterdata',
   buyFilteredDataController.buyfilteredListing,
 );
-
+router.get('/buy/listings/detail/:id', buyPropertiesController.getPropertyById);
 module.exports = router;

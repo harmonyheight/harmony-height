@@ -53,6 +53,7 @@ export interface HomeListingsState {
 export interface BuyListingsState {
     popularListings: Listing[] | [];
     latestListings: Listing[] | [];
+    propertyDetail: Listing | null,
     loading: boolean;
     error: string | null;
 }
