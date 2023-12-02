@@ -1,7 +1,7 @@
 import axios from "axios";
 // Create an Axios instance
 const axiosUserInstance = axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: 'http://195.35.8.116/api',
 });
 
 // Add a request interceptor to inject the access token
