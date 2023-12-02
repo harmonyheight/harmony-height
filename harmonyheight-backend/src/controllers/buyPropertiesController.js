@@ -53,7 +53,6 @@ const latestListing = async (req, res) => {
 
 const getPropertyById = async (req, res) => {
   const id = req.params.id;
-  console.log('--->', id);
   try {
     const property = await Listings.findById(id).populate('user', 'name email');
 

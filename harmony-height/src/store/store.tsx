@@ -18,7 +18,8 @@ const store = configureStore({
         rentlisting: rentingListingSlice,
 
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat(thunk, logger),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat(thunk),
+    // .concat(thunk, logger),
 })
 
 

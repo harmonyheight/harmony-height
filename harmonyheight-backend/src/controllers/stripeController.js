@@ -1,4 +1,11 @@
 const Customer = require('../models/Customer');
+const Listings = require('../models/Listings');
+const Order = require('../models/Order');
+const calculateApplicationFee = (price) => {
+  // Customize this function based on your application's fee structure
+  const applicationFeePercentage = 10; // 10% fee, modify as needed
+  return Math.round((price * applicationFeePercentage) / 100) * 100;
+};
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const connectStripe = async (req, res) => {
@@ -51,4 +58,69 @@ const stripeCallback = async (req, res) => {
   }
 };
 
-module.exports = { connectStripe, stripeCallback };
+const createCheckoutSession = async (req, res) => {
+  try {
+    const { listingId, sellerId } = req.body; // Assuming you pass the listing ID and seller ID in the request body
+    // Fetch the listing and seller details
+    const customer = await stripe.customers.create({
+      metadata: {
+        userId: req.customerId,
+        cart: JSON.stringify({
+          buyer: req.customerId, // Assuming you have the buyer's user ID in req.customerId
+          seller: sellerId,
+          listing: listingId,
+          status: 'created',
+        }),
+      },
+    });
+    const listing = await Listings.findById(listingId).populate(
+      'user',
+      'stripeAccountId',
+    );
+    const seller = await Customer.findById(sellerId);
+
+    // Create a Checkout Session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: listing.state, // Modify this according to your product data
+            },
+            unit_amount: listing.price * 100, // Convert to cents
+          },
+          quantity: 1,
+        },
+      ],
+      payment_intent_data: {
+        // application_fee_amount: calculateApplicationFee(listing.price), // Set the application fee amount
+        transfer_data: {
+          destination: seller.stripeAccountId, // Seller's Stripe account ID
+        },
+      },
+      mode: 'payment',
+      success_url: 'http://localhost:3000', // Replace with your success URL
+      cancel_url: 'http://localhost:3000', // Replace with your cancel URL
+    });
+    // // Create a new order
+    // const order = new Order({
+    //   buyer: req.customerId, // Assuming you have the buyer's user ID in req.customerId
+    //   seller: sellerId,
+    //   listing: listingId,
+    //   paymentIntent: session.payment_intent,
+    //   status: 'created',
+    // });
+
+    // await order.save();
+
+    // Send the Checkout Session ID in the response
+    res.send({ url: session.url });
+  } catch (error) {
+    console.error('Error creating checkout session:', error.message);
+    res.status(500).json({ error: 'Error creating checkout session' });
+  }
+};
+
+module.exports = { connectStripe, stripeCallback, createCheckoutSession };
