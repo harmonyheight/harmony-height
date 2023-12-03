@@ -37,7 +37,7 @@ const AddNewListingPage = () => {
             console.log("Images", selectedImages)
             console.log(data);
             console.log('====================================');
-            await axios.post('http://api.harmonyheightsresidences.com:8080/api/create-listing', {
+            await axios.post('http://api.harmonyheightsresidences.com/api/create-listing', {
                 ...data,
                 images: selectedImages
             }, {
@@ -107,7 +107,7 @@ const AddNewListingPage = () => {
                 formData.append(`images`, imageFile, imageFile.name);
             });
 
-            await axios.post('http://api.harmonyheightsresidences.com:8080/api/listing/new', formData, {
+            await axios.post('http://api.harmonyheightsresidences.com/api/listing/new', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -127,7 +127,7 @@ const AddNewListingPage = () => {
     };
     const handleImageRemove = async (index: number) => {
         const updatedImages = [...selectedImages];
-        await axios.post('http://api.harmonyheightsresidences.com:8080/api/delete-image', {
+        await axios.post('http://api.harmonyheightsresidences.com/api/delete-image', {
             imageUrl: selectedImages[index]
         })
             .then(response => {
