@@ -14,7 +14,7 @@ const uploadImages = (req, res) => {
   const imageUrls = req.files.map((file) => {
     return `${req.protocol}://${req.get(
       'host',
-    )}/public/uploads/${file.filename.replace(/\s+/g, '-')}`;
+    )}/uploads/${file.filename.replace(/\s+/g, '-')}`;
   });
 
   // Handle the uploaded files as needed (e.g., save their information to a database).
