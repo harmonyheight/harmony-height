@@ -1,7 +1,7 @@
 import axios from "axios";
 // Create an Axios instance
 const axiosUserInstance = axios.create({
-    baseURL: 'http://api.harmonyheightsresidences.com/api',
+    baseURL: 'http://api.harmonyheightsresidences.com:8080/api',
 });
 
 // Add a request interceptor to inject the access token

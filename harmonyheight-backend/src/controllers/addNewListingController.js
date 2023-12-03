@@ -16,7 +16,7 @@ const uploadImages = (req, res) => {
   const imageUrls = req.files.map((file) => {
     return `${req.protocol}://${req.get(
       'host',
-    )}:8080/uploads/${file.filename.replace(/\s+/g, '-')}`;
+    )}/uploads/${file.filename.replace(/\s+/g, '-')}`;
   });
 
   // Handle the uploaded files as needed (e.g., save their information to a database).
@@ -42,7 +42,7 @@ const deleteImage = (req, res) => {
     console.log(filename);
     console.log('====================================');
     // Construct the full path to the image
-    const imagePath = path.join(':8080/uploads', filename); // Adjust the path as needed
+    const imagePath = path.join('uploads', filename); // Adjust the path as needed
     console.log('====================================');
     console.log(imagePath);
     console.log('====================================');
