@@ -20,6 +20,7 @@ app.use('/uploads', express.static('uploads'));
 const allowedOrigins = [
   'http://harmonyheightsresidences.com',
   'http://localhost:3000',
+  'http://195.35.8.116',
 ];
 app.use(cors({ origin: allowedOrigins }));
 app.get('/api', (req, res) => {
