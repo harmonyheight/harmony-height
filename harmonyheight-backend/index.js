@@ -16,7 +16,11 @@ app.use(bodyParser.json());
 //   express.static(path.join(__dirname, 'public/uploads')),
 // );
 app.use('/uploads', express.static('uploads'));
-app.use(cors());
+const allowedOrigins = [
+  'http://harmonyheightsresidences.com',
+  'http://localhost:3000',
+];
+app.use(cors({ origin: allowedOrigins }));
 app.get('/api', (req, res) => {
   res.send('<h1>Harmony Height Server is up and running</h1>');
 });
