@@ -11,10 +11,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 // middleware that can be used to enable CORS with various options.
-app.use(
-  '/public/uploads',
-  express.static(path.join(__dirname, 'public/uploads')),
-);
+// app.use(
+//   '/public/uploads',
+//   express.static(path.join(__dirname, 'public/uploads')),
+// );
+app.use('/uploads', express.static('uploads'));
 app.use(cors());
 app.get('/api', (req, res) => {
   res.send('<h1>Harmony Height Server is up and running</h1>');

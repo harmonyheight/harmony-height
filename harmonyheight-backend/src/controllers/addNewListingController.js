@@ -40,7 +40,7 @@ const deleteImage = (req, res) => {
     console.log(filename);
     console.log('====================================');
     // Construct the full path to the image
-    const imagePath = path.join('public', 'uploads', filename); // Adjust the path as needed
+    const imagePath = path.join('uploads', filename); // Adjust the path as needed
     console.log('====================================');
     console.log(imagePath);
     console.log('====================================');
