@@ -3,6 +3,8 @@ const path = require('path');
 const Listings = require('../models/Listings');
 const mongoose = require('mongoose');
 const uploadImages = (req, res) => {
+  console.log('Protocol:', req.protocol);
+  console.log('Host:', req.get('host'));
   // The uploaded files are available in req.files
   if (!req.files || req.files.length === 0) {
     return res
