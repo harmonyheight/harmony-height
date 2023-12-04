@@ -5,24 +5,13 @@ const bodyParser = require('body-parser');
 const routes = require('./src/routes');
 const { connectToMongoDB } = require('./src/utils/db');
 const app = express();
-// const path = require('path');
-app.use(bodyParser.raw({ type: 'application/json' }));
-app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
+// parse application/json
+app.use(bodyParser.json());
 // middleware that can be used to enable CORS with various options.
-// app.use(
-//   '/public/uploads',
-//   express.static(path.join(__dirname, 'public/uploads')),
-// );
 app.use('/uploads', express.static('uploads'));
-const allowedOrigins = [
-  'http://harmonyheightsresidences.com',
-  'http://localhost:3000',
-  'http://195.35.8.116',
-];
-app.use(cors({ origin: allowedOrigins }));
+app.use(cors());
 app.get('/api', (req, res) => {
   res.send('<h1>Harmony Height Server is up and running</h1>');
 });
