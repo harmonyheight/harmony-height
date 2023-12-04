@@ -173,6 +173,11 @@ const DetailProperty = ({ listing }: { listing: Listing }) => {
             </div>
             <div className="py-8">
                 <div className="border-l-4 border-primary">
+                    <h3 className="text-xl font-semibold uppercase pl-2">BUY PROPERTY</h3>
+                </div>
+            </div>
+            <div className="py-8">
+                <div className="border-l-4 border-primary">
                     <h3 className="text-xl font-semibold uppercase pl-2">Seller Information</h3>
                 </div>
             </div>
