@@ -1,11 +1,7 @@
 const Customer = require('../models/Customer');
 const Listings = require('../models/Listings');
 const Order = require('../models/Order');
-const calculateApplicationFee = (price) => {
-  // Customize this function based on your application's fee structure
-  const applicationFeePercentage = 10; // 10% fee, modify as needed
-  return Math.round((price * applicationFeePercentage) / 100) * 100;
-};
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const connectStripe = async (req, res) => {
@@ -37,42 +33,10 @@ const connectStripe = async (req, res) => {
   }
 };
 
-const stripeCallback = async (req, res) => {
-  const { code } = req.query;
-  try {
-    const response = await stripe.oauth.token({
-      grant_type: 'authorization_code',
-      code,
-    });
-
-    const connectedAccountId = response.stripe_user_id;
-    const user = await Customer.findOneAndUpdate({
-      _id: req.customerId,
-      stripeAccountId: connectedAccountId,
-    });
-
-    res.json({ message: 'Stripe account connected successfully', user });
-  } catch (error) {
-    console.error('Error connecting Stripe account:', error.message);
-    res.status(500).json({ error: 'Error connecting Stripe account' });
-  }
-};
-
 const createCheckoutSession = async (req, res) => {
   try {
     const { listingId, sellerId } = req.body; // Assuming you pass the listing ID and seller ID in the request body
     // Fetch the listing and seller details
-    const customer = await stripe.customers.create({
-      metadata: {
-        userId: req.customerId,
-        cart: JSON.stringify({
-          buyer: req.customerId, // Assuming you have the buyer's user ID in req.customerId
-          seller: sellerId,
-          listing: listingId,
-          status: 'created',
-        }),
-      },
-    });
     const listing = await Listings.findById(listingId).populate(
       'user',
       'stripeAccountId',
@@ -101,21 +65,15 @@ const createCheckoutSession = async (req, res) => {
         },
       },
       mode: 'payment',
-      success_url: 'http://localhost:3000', // Replace with your success URL
-      cancel_url: 'http://localhost:3000', // Replace with your cancel URL
+      success_url: 'http://harmonyheightsresidences.com', // Replace with your success URL
+      cancel_url: 'http://harmonyheightsresidences.com', // Replace with your cancel URL
+      metadata: {
+        buyer: req.customerId,
+        seller: sellerId,
+        listing: listingId,
+        status: 'created',
+      },
     });
-    // // Create a new order
-    // const order = new Order({
-    //   buyer: req.customerId, // Assuming you have the buyer's user ID in req.customerId
-    //   seller: sellerId,
-    //   listing: listingId,
-    //   paymentIntent: session.payment_intent,
-    //   status: 'created',
-    // });
-
-    // await order.save();
-
-    // Send the Checkout Session ID in the response
     res.send({ url: session.url });
   } catch (error) {
     console.error('Error creating checkout session:', error.message);
@@ -123,4 +81,4 @@ const createCheckoutSession = async (req, res) => {
   }
 };
 
-module.exports = { connectStripe, stripeCallback, createCheckoutSession };
+module.exports = { connectStripe, createCheckoutSession };

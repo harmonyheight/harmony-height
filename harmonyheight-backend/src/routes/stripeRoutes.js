@@ -16,8 +16,6 @@ router.get(
   stripeController.createCheckoutSession,
 );
 
-router.get('/oauth/callback', stripeController.stripeCallback);
-
 const endpointSecret =
   'whsec_e1d6d18bfefd28c573b5fba6395990df1599ec4a16e21a9c55fff188918fbbe8';
 
@@ -39,9 +37,6 @@ router.post(
       switch (event.type) {
         case 'checkout.session.completed':
           const checkoutSessionAsyncCompleted = event.data.object;
-          console.log('====================================');
-          console.log(checkoutSessionAsyncCompleted);
-          console.log('====================================');
           break;
         default:
           console.log(`Unhandled event type ${event.type}`);
