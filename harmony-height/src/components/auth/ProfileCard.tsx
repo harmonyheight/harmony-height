@@ -8,6 +8,7 @@ import { BsFillHeartFill, BsFillBuildingsFill } from 'react-icons/bs'
 import { GiHouseKeys } from 'react-icons/gi'
 import axiosUserInstance from "@/store/api/axiosUserInstance";
 import { updateStripeAccount } from "@/store/reducers/userAuthSlice";
+import { checkIncompleteSetupAsync, getIncompleteAccountLinkAsync } from "@/store/thunks/userAuthThunk";
 const ProfileCard = () => {
     const { user } = useAppSelector(state => state.auth)
     const { userListingTypeCount, loading } = useAppSelector(state => state.userlistings)
@@ -19,12 +20,32 @@ const ProfileCard = () => {
         try {
             const response = await axiosUserInstance.get('/connect');
             dispatch(updateStripeAccount({ id: response.data.stripeAccountId }))
-            console.log('Stripe account connected:', response.data);
             // Redirect to the provided account link URL or handle it in your application
+            localStorage.setItem('accountLink', response.data.accountLink);
             window.location.href = response.data.accountLink;
+
         } catch (error: any) {
             console.error('Error connecting Stripe account:', error.message);
         }
+    }
+    window.addEventListener('popstate', async () => {
+        // Retrieve the account link URL from local storage or state
+        const accountLink = localStorage.getItem('accountLink');
+
+        if (accountLink) {
+            dispatch(checkIncompleteSetupAsync());
+            // Dispatch your action or handle the user's return as needed
+            console.log('User returned from account link:', accountLink);
+
+            // Clear the stored account link
+            localStorage.removeItem('accountLink');
+        }
+    });
+    const handleGetLink = async () => {
+        dispatch(getIncompleteAccountLinkAsync()).unwrap().then((originalPromiseResult) => {
+            window.location.href = originalPromiseResult?.accountLink;
+        }).catch((rejectedValueOrSerializedError) => {
+        });
     }
     return (
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-3 mt-5 p-5 md:grid-cols-1">
@@ -48,13 +69,22 @@ const ProfileCard = () => {
                     {
                         user?.stripeAccountId ?
 
-                            <div className="stat">
-                                <div className="stat-figure text-accent text-5xl">
-                                    <MdOutlineCreditScore />
+                            user?.stripeProfileComplete ?
+                                <div className="stat">
+                                    <div className="stat-figure text-accent text-5xl">
+                                        <MdOutlineCreditScore />
+                                    </div>
+                                    <div className="stat-title">Stripe Payment</div>
+                                    <div className="stat-desc">Account ID: {user?.stripeAccountId}</div>
                                 </div>
-                                <div className="stat-title">Stripe Payment</div>
-                                <div className="stat-desc">Account ID: {user?.stripeAccountId}</div>
-                            </div>
+                                :
+                                <div className="stat">
+                                    <div className="stat-figure text-accent text-5xl">
+                                        <MdOutlineCreditCardOff />
+                                    </div>
+                                    <div className="stat-title">Complete Stripe Profile</div>
+                                    <div className="stat-value"> <button className="btn btn-xs btn-primary px-10 mt-3" onClick={handleGetLink}>Complete Profile</button></div>
+                                </div>
                             :
                             <div className="stat">
                                 <div className="stat-figure text-accent text-5xl">

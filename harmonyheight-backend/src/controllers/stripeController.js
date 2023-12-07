@@ -50,16 +50,9 @@ const checkIncompleteSetup = async (req, res) => {
       accountInfo.requirements.pending_verification.length > 0
     ) {
       // Incomplete onboarding
-      const accountLink = await stripe.accountLinks.create({
-        account: stripeAccountId,
-        type: 'account_onboarding',
-        refresh_url: 'http://harmonyheightsresidences.com/profile', // Replace with your refresh URL
-        return_url: 'http://harmonyheightsresidences.com/profile', // Replace with your return URL
-      });
       return res.json({
         stripeProfileComplete: false,
         message: 'Stripe account setup is incomplete',
-        accountLink: accountLink.url,
       });
     } else {
       // Complete onboarding
@@ -74,6 +67,27 @@ const checkIncompleteSetup = async (req, res) => {
         message: 'Stripe account setup is complete',
       });
     }
+  } catch (error) {
+    console.error('Error checking incomplete setup:', error.message);
+    res.status(500).json({ error: 'Error checking incomplete setup' });
+  }
+};
+
+const generateStripeSetupLink = async (req, res) => {
+  try {
+    // Assuming you have a field in your database to track the Stripe account ID
+    const { stripeAccountId } = await Customer.findById(req.customerId);
+    // Incomplete onboarding
+    const accountLink = await stripe.accountLinks.create({
+      account: stripeAccountId,
+      type: 'account_onboarding',
+      refresh_url: 'http://harmonyheightsresidences.com/profile', // Replace with your refresh URL
+      return_url: 'http://harmonyheightsresidences.com/profile', // Replace with your return URL
+    });
+    return res.json({
+      message: 'Stripe account setup is incomplete',
+      accountLink: accountLink.url,
+    });
   } catch (error) {
     console.error('Error checking incomplete setup:', error.message);
     res.status(500).json({ error: 'Error checking incomplete setup' });
@@ -128,4 +142,9 @@ const createCheckoutSession = async (req, res) => {
   }
 };
 
-module.exports = { connectStripe, createCheckoutSession, checkIncompleteSetup };
+module.exports = {
+  connectStripe,
+  createCheckoutSession,
+  checkIncompleteSetup,
+  generateStripeSetupLink,
+};

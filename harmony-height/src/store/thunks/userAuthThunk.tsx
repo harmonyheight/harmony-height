@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../api/axiosInstance";
 import { encrypt } from "@/utils/utils";
+import axiosUserInstance from "../api/axiosUserInstance";
 export const userLoginAsync = createAsyncThunk(
     'auth/login',
     async (credentials: { email: string; password: string }, { rejectWithValue }) => {
@@ -37,6 +38,33 @@ export const userRegisterAsync = createAsyncThunk(
         }
     }
 );
+export const checkIncompleteSetupAsync = createAsyncThunk(
+    'auth/stripestatus',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axiosUserInstance.post('/stripestatus');
+            return response.data;
+        } catch (error: any) {
+            toast.error(error.response?.data?.message)
+            return rejectWithValue(error.response?.data?.errors);
+        }
+    }
+);
+
+export const getIncompleteAccountLinkAsync = createAsyncThunk(
+    'auth/stripeaccountlink',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axiosUserInstance.post('/stripeaccountlink');
+            return response.data;
+        } catch (error: any) {
+            toast.error(error.response?.data?.message)
+            return rejectWithValue(error.response?.data?.errors);
+        }
+    }
+);
+
+
 
 export const emailVerifyAsync = createAsyncThunk(
     'auth/verification',

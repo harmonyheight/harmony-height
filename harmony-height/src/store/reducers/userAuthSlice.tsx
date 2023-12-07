@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import { UserAuthState, User } from "@/schema/types/userAuth/userAuth";
-import { userLoginAsync, userRegisterAsync } from "../thunks/userAuthThunk";
+import { checkIncompleteSetupAsync, userLoginAsync, userRegisterAsync } from "../thunks/userAuthThunk";
 
 const initialState: UserAuthState = {
     user: null,
@@ -49,6 +49,22 @@ const userAuthSlice = createSlice({
                 state.error = null
             // state.user = action.payload?.user
         }).addCase(userRegisterAsync.rejected, (state, action: any) => {
+            state.loading = false,
+                state.user = null,
+                state.error = action.payload
+        })
+        //checkIncompleteSetupAsync
+        builder.addCase(checkIncompleteSetupAsync.pending, (state) => {
+            state.loading = true;
+            state.error = null
+        })
+        builder.addCase(checkIncompleteSetupAsync.fulfilled, (state, action: any) => {
+            state.loading = false,
+                state.error = null
+            if (state.user) {
+                state.user.stripeProfileComplete = action.payload?.stripeProfileComplete
+            }
+        }).addCase(checkIncompleteSetupAsync.rejected, (state, action: any) => {
             state.loading = false,
                 state.user = null,
                 state.error = action.payload

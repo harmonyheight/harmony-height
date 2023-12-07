@@ -14,6 +14,11 @@ router.get(
   authenticateToken,
   stripeController.checkIncompleteSetup,
 );
+router.get(
+  '/stripeaccountlink',
+  authenticateToken,
+  stripeController.generateStripeSetupLink,
+);
 //'/create-checkout-session'
 router.get(
   '/create-checkout-session',
@@ -42,18 +47,12 @@ router.post(
       switch (event.type) {
         case 'checkout.session.completed':
           const checkoutSessionAsyncCompleted = event.data.object;
-          console.log('====================================');
-          console.log(checkoutSessionAsyncCompleted);
-          console.log('====================================');
           break;
         default:
           console.log(`Unhandled event type ${event.type}`);
       }
       response.send();
     } catch (err) {
-      console.log('====================================');
-      console.log(`Webhook Error: ${err.message}`);
-      console.log('====================================');
       response.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
