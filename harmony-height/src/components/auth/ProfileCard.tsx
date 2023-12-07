@@ -7,6 +7,7 @@ import { MdOutlineCreditScore } from "react-icons/md";
 import { BsFillHeartFill, BsFillBuildingsFill } from 'react-icons/bs'
 import { GiHouseKeys } from 'react-icons/gi'
 import axiosUserInstance from "@/store/api/axiosUserInstance";
+import { updateStripeAccount } from "@/store/reducers/userAuthSlice";
 const ProfileCard = () => {
     const { user } = useAppSelector(state => state.auth)
     const { userListingTypeCount, loading } = useAppSelector(state => state.userlistings)
@@ -17,7 +18,7 @@ const ProfileCard = () => {
     const handleConnect = async () => {
         try {
             const response = await axiosUserInstance.get('/connect');
-
+            dispatch(updateStripeAccount({ id: response.data.stripeAccountId }))
             console.log('Stripe account connected:', response.data);
             // Redirect to the provided account link URL or handle it in your application
             window.location.href = response.data.accountLink;

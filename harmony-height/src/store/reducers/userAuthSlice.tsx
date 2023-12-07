@@ -20,6 +20,11 @@ const userAuthSlice = createSlice({
             state.error = null;
             localStorage.removeItem("userToken")
         },
+        updateStripeAccount: (state, action) => {
+            if (state.user) {
+                state.user.stripeAccountId = action.payload?.id
+            }
+        }
     },
     extraReducers(builder) {
         builder.addCase(userLoginAsync.pending, (state) => {
@@ -56,5 +61,5 @@ const rootPersistConfig = {
     storage: storage,
     blacklist: ['auth', 'navigation']
 }
-export const { logout } = userAuthSlice.actions;
+export const { logout, updateStripeAccount } = userAuthSlice.actions;
 export default persistReducer(rootPersistConfig, userAuthSlice.reducer);

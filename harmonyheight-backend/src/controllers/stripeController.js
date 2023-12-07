@@ -26,7 +26,7 @@ const connectStripe = async (req, res) => {
       return_url: 'http://harmonyheightsresidences.com/profile', // Replace with your return URL
     });
     //http://harmonyheightsresidences.com/
-    res.json({ accountLink: accountLink.url });
+    res.json({ accountLink: accountLink.url, stripeAccountId: account.id });
   } catch (error) {
     console.error('Error connecting Stripe account:', error.message);
     res.status(500).json({ error: 'Error connecting Stripe account' });
