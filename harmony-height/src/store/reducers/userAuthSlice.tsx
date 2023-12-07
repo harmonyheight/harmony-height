@@ -65,7 +65,10 @@ const userAuthSlice = createSlice({
             state.loading = false,
                 state.error = null
             if (state.user) {
-                state.user.stripeProfileComplete = action.payload?.stripeProfileComplete
+                state.user = {
+                    ...state.user,
+                    stripeProfileComplete: action.payload?.stripeProfileComplete
+                }
             }
         }).addCase(checkIncompleteSetupAsync.rejected, (state, action: any) => {
             state.loading = false,
