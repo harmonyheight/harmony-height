@@ -42,10 +42,8 @@ const ProfileCard = () => {
         }
     });
     const handleGetLink = async () => {
-        dispatch(getIncompleteAccountLinkAsync()).unwrap().then((originalPromiseResult) => {
-            window.location.href = originalPromiseResult?.accountLink;
-        }).catch((rejectedValueOrSerializedError) => {
-        });
+        const response = await axiosUserInstance.get('/stripeaccountlink');
+        window.location.href = response.data.accountLink;
     }
     return (
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-3 mt-5 p-5 md:grid-cols-1">
