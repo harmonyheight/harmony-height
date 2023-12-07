@@ -22,14 +22,61 @@ const connectStripe = async (req, res) => {
     const accountLink = await stripe.accountLinks.create({
       account: account.id,
       type: 'account_onboarding',
-      refresh_url: 'http://localhost:3000/profile', // Replace with your refresh URL
-      return_url: 'http://localhost:3000/profile', // Replace with your return URL
+      refresh_url: 'http://harmonyheightsresidences.com/profile', // Replace with your refresh URL
+      return_url: 'http://harmonyheightsresidences.com/profile', // Replace with your return URL
     });
-
+    //http://harmonyheightsresidences.com/
     res.json({ accountLink: accountLink.url });
   } catch (error) {
     console.error('Error connecting Stripe account:', error.message);
     res.status(500).json({ error: 'Error connecting Stripe account' });
+  }
+};
+
+const checkIncompleteSetup = async (req, res) => {
+  try {
+    // Assuming you have a field in your database to track the Stripe account ID
+    const { stripeAccountId } = await Customer.findById(req.customerId);
+    // Retrieve account information to check onboarding status
+    if (!stripeAccountId) {
+      return res.json({
+        stripeProfileComplete: false,
+        message: 'Stripe account not connected',
+      });
+    }
+    const accountInfo = await stripe.accounts.retrieve(stripeAccountId);
+    if (
+      accountInfo.requirements.currently_due.length > 0 ||
+      accountInfo.requirements.pending_verification.length > 0
+    ) {
+      // Incomplete onboarding
+      const accountLink = await stripe.accountLinks.create({
+        account: stripeAccountId,
+        type: 'account_onboarding',
+        refresh_url: 'http://harmonyheightsresidences.com/profile', // Replace with your refresh URL
+        return_url: 'http://harmonyheightsresidences.com/profile', // Replace with your return URL
+      });
+      return res.json({
+        stripeProfileComplete: false,
+        message: 'Stripe account setup is incomplete',
+        accountLink: accountLink.url,
+      });
+    } else {
+      // Complete onboarding
+      await Customer.findByIdAndUpdate(
+        { _id: req.customerId },
+        {
+          stripeProfileComplete: true,
+        },
+      );
+      return res.json({
+        stripeProfileComplete: true,
+        message: 'Stripe account setup is complete',
+      });
+    }
+  } catch (error) {
+    console.error('Error checking incomplete setup:', error.message);
+    res.status(500).json({ error: 'Error checking incomplete setup' });
   }
 };
 
@@ -81,4 +128,4 @@ const createCheckoutSession = async (req, res) => {
   }
 };
 
-module.exports = { connectStripe, createCheckoutSession };
+module.exports = { connectStripe, createCheckoutSession, checkIncompleteSetup };

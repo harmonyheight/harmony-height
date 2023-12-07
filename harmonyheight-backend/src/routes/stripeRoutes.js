@@ -9,6 +9,11 @@ const {
 } = require('../validations/authValidationMiddleware');
 
 router.get('/connect', authenticateToken, stripeController.connectStripe);
+router.get(
+  '/stripestatus',
+  authenticateToken,
+  stripeController.checkIncompleteSetup,
+);
 //'/create-checkout-session'
 router.get(
   '/create-checkout-session',
@@ -37,6 +42,9 @@ router.post(
       switch (event.type) {
         case 'checkout.session.completed':
           const checkoutSessionAsyncCompleted = event.data.object;
+          console.log('====================================');
+          console.log(checkoutSessionAsyncCompleted);
+          console.log('====================================');
           break;
         default:
           console.log(`Unhandled event type ${event.type}`);

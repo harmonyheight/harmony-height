@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 import { Listing } from "@/schema/types/properties/properties";
-
+import { CiCreditCard1 } from "react-icons/ci";
 import { LiaBedSolid, LiaPencilRulerSolid } from "react-icons/lia";
 import { IoWaterOutline } from "react-icons/io5";
 import { PiBathtubLight } from "react-icons/pi";
@@ -174,6 +174,18 @@ const DetailProperty = ({ listing }: { listing: Listing }) => {
             <div className="py-8">
                 <div className="border-l-4 border-primary">
                     <h3 className="text-xl font-semibold uppercase pl-2">BUY PROPERTY</h3>
+                </div>
+            </div>
+            <div className="flex w-full py-2">
+
+                <div className="grid flex-grow card bg-slate-50 rounded-box place-items-center ">
+                    <div className="stat">
+                        <div className="stat-figure">
+                            <CiCreditCard1 className="text-6xl" />
+                        </div>
+                        <div className="stat-title">BUY PROPERTY NOW</div>
+                        <div className="stat-value"><button className="btn btn-wide btn-primary" >BUY NOW</button></div>
+                    </div>
                 </div>
             </div>
             <div className="py-8">

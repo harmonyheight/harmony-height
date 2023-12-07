@@ -32,6 +32,10 @@ const customerSchema = new Schema({
     type: String,
     default: '',
   },
+  stripeProfileComplete: {
+    type: Boolean,
+    default: false,
+  },
   isAdmin: {
     type: String,
     default: false,
