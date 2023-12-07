@@ -22,7 +22,10 @@ const userAuthSlice = createSlice({
         },
         updateStripeAccount: (state, action) => {
             if (state.user) {
-                state.user.stripeAccountId = action.payload?.id
+                state.user = {
+                    ...state.user,
+                    stripeAccountId: action.payload?.id
+                }
             }
         }
     },
