@@ -15,32 +15,20 @@ const ProfileCard = () => {
     const dispatch = useAppDispatch();
     React.useEffect(() => {
         dispatch(getUserListingTypeCountAsync())
-    }, [dispatch])
+        if (user?.stripeProfileComplete == false) {
+            dispatch(checkIncompleteSetupAsync());
+        }
+    }, [dispatch, user?.stripeProfileComplete])
     const handleConnect = async () => {
         try {
             const response = await axiosUserInstance.get('/connect');
             dispatch(updateStripeAccount({ id: response.data.stripeAccountId }))
-            // Redirect to the provided account link URL or handle it in your application
-            localStorage.setItem('accountLink', response.data.accountLink);
             window.location.href = response.data.accountLink;
 
         } catch (error: any) {
             console.error('Error connecting Stripe account:', error.message);
         }
     }
-    window.addEventListener('popstate', async () => {
-        // Retrieve the account link URL from local storage or state
-        const accountLink = localStorage.getItem('accountLink');
-
-        if (accountLink) {
-            dispatch(checkIncompleteSetupAsync());
-            // Dispatch your action or handle the user's return as needed
-            console.log('User returned from account link:', accountLink);
-
-            // Clear the stored account link
-            localStorage.removeItem('accountLink');
-        }
-    });
     const handleGetLink = async () => {
         const response = await axiosUserInstance.get('/stripeaccountlink');
         window.location.href = response.data.accountLink;
