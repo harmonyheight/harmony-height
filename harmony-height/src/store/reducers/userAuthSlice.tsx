@@ -21,6 +21,9 @@ const userAuthSlice = createSlice({
             localStorage.removeItem("userToken")
         },
         updateStripeAccount: (state, action) => {
+            console.log('====================================');
+            console.log(action);
+            console.log('====================================');
             if (state.user) {
                 state.user.stripeAccountId = action.payload?.id
             }
