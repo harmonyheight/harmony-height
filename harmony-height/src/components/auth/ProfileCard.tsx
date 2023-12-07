@@ -8,6 +8,7 @@ import { BsFillHeartFill, BsFillBuildingsFill } from 'react-icons/bs'
 import { GiHouseKeys } from 'react-icons/gi'
 import axiosUserInstance from "@/store/api/axiosUserInstance";
 import { updateStripeAccount } from "@/store/reducers/userAuthSlice";
+import { toast } from "react-toastify";
 import { checkIncompleteSetupAsync, getIncompleteAccountLinkAsync } from "@/store/thunks/userAuthThunk";
 const ProfileCard = () => {
     const { user } = useAppSelector(state => state.auth)
@@ -15,10 +16,7 @@ const ProfileCard = () => {
     const dispatch = useAppDispatch();
     React.useEffect(() => {
         dispatch(getUserListingTypeCountAsync())
-        if (user?.stripeProfileComplete == false) {
-            dispatch(checkIncompleteSetupAsync());
-        }
-    }, [dispatch, user?.stripeProfileComplete])
+    }, [dispatch])
     const handleConnect = async () => {
         try {
             const response = await axiosUserInstance.get('/connect');
@@ -29,7 +27,13 @@ const ProfileCard = () => {
             console.error('Error connecting Stripe account:', error.message);
         }
     }
+
     const handleGetLink = async () => {
+        dispatch(checkIncompleteSetupAsync()).unwrap().then((originalPromiseResult) => {
+            toast.success(`${originalPromiseResult?.message}`)
+        }).catch((rejectedValueOrSerializedError) => {
+
+        });
         const response = await axiosUserInstance.get('/stripeaccountlink');
         window.location.href = response.data.accountLink;
     }
