@@ -79,6 +79,7 @@ exports.register = async (req, res) => {
       password: decryptedPassword,
       name,
       verificationCode,
+      stripeAccountId: '',
     });
     const savedCustomer = await newCustomer.save();
     delete savedCustomer._doc.password;
