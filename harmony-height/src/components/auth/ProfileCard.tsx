@@ -32,10 +32,11 @@ const ProfileCard = () => {
         dispatch(checkIncompleteSetupAsync()).unwrap().then((originalPromiseResult) => {
             toast.success(`${originalPromiseResult?.message}`)
         }).catch((rejectedValueOrSerializedError) => {
-
         });
-        // const response = await axiosUserInstance.get('/stripeaccountlink');
-        // window.location.href = response.data.accountLink;
+        if (user?.stripeProfileComplete == false) {
+            const response = await axiosUserInstance.get('/stripeaccountlink');
+            window.location.href = response.data.accountLink;
+        }
     }
     return (
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-3 mt-5 p-5 md:grid-cols-1">
@@ -58,23 +59,17 @@ const ProfileCard = () => {
                 <div className="stats shadow bg-blue-50">
                     {
                         user?.stripeAccountId ?
-
-                            user?.stripeProfileComplete ?
-                                <div className="stat">
-                                    <div className="stat-figure text-accent text-5xl">
-                                        <MdOutlineCreditScore />
-                                    </div>
-                                    <div className="stat-title">Stripe Payment</div>
-                                    <div className="stat-desc">Account ID: {user?.stripeAccountId}</div>
+                            <div className="stat">
+                                <div className="stat-figure text-accent text-5xl">
+                                    <MdOutlineCreditCardOff />
                                 </div>
-                                :
-                                <div className="stat">
-                                    <div className="stat-figure text-accent text-5xl">
-                                        <MdOutlineCreditCardOff />
-                                    </div>
-                                    <div className="stat-title">Complete Stripe Profile</div>
-                                    <div className="stat-value"> <button className="btn btn-xs btn-primary px-10 mt-3" onClick={handleGetLink}>Complete Profile</button></div>
-                                </div>
+                                <div className="stat-title">Stripe Payment</div>
+                                {
+                                    user?.stripeProfileComplete ?
+                                        <div className="stat-desc">Account ID: {user?.stripeAccountId}</div> :
+                                        <div className="stat-title">Status: <button className="btn btn-xs btn-primary " onClick={handleGetLink}>Complete Profile</button></div>
+                                }
+                            </div>
                             :
                             <div className="stat">
                                 <div className="stat-figure text-accent text-5xl">

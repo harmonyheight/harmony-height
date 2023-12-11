@@ -59,7 +59,7 @@ const LoginPage = () => {
 
                                     <div className="indicator  mt-5">
                                         <span className="indicator-item badge bg-red-600 text-white">Required</span>
-                                        <input type="password" placeholder="Enter password" className="input input-bordered"  {...register('password', { required: 'Password is required' })} />
+                                        <input autoComplete="true" type="password" placeholder="Enter password" className="input input-bordered"  {...register('password', { required: 'Password is required' })} />
                                     </div>
                                     {errors.password && <span className="text-red-600">{errors.password.message}</span>}
                                     <div className="card-actions justify-start">

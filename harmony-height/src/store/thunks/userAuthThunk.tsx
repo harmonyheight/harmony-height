@@ -38,11 +38,12 @@ export const userRegisterAsync = createAsyncThunk(
         }
     }
 );
+//checkIncompleteSetupAsync
 export const checkIncompleteSetupAsync = createAsyncThunk(
-    'auth/stripestatus',
+    'auth/stripeaccountlink',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axiosUserInstance.post('/stripestatus');
+            const response = await axiosUserInstance.get('/stripestatus');
             return response.data;
         } catch (error: any) {
             toast.error(error.response?.data?.message)
