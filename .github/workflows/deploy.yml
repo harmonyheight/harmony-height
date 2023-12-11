@@ -35,7 +35,7 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
           script: |
-           cd /harmony/harmony-height
+           cd harmony/harmony-height
            set -e
            echo "Client Deployment started..."
            echo "Installing Dependencies..."
