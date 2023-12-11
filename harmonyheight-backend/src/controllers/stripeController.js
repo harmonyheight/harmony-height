@@ -113,7 +113,7 @@ const createCheckoutSession = async (req, res) => {
             currency: 'usd',
             product_data: {
               name: listing.state, // Modify this according to your product data
-              images: listing.images[0],
+              images: [listing.images[0]],
             },
             unit_amount: listing.price * 100, // Convert to cents
           },
