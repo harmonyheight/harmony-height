@@ -29,17 +29,18 @@ const ProfileCard = () => {
     }
 
     const handleGetLink = async () => {
-        dispatch(checkIncompleteSetupAsync()).unwrap().then((originalPromiseResult) => {
+        dispatch(checkIncompleteSetupAsync()).unwrap().then(async (originalPromiseResult) => {
             toast.success(`${originalPromiseResult?.message}`)
+            if (originalPromiseResult?.stripeProfileComplete == false) {
+                const response = await axiosUserInstance.get('/stripeaccountlink');
+                window.location.href = response.data.accountLink;
+            }
         }).catch((rejectedValueOrSerializedError) => {
             console.log('====================================');
             console.log(rejectedValueOrSerializedError)
             console.log('====================================');
         });
-        if (user?.stripeProfileComplete == false) {
-            const response = await axiosUserInstance.get('/stripeaccountlink');
-            window.location.href = response.data.accountLink;
-        }
+
     }
     return (
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-3 mt-5 p-5 md:grid-cols-1">
