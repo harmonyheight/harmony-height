@@ -9,8 +9,6 @@ npm install --yes
 echo "Creating Production Build..."
 npm run build
 
-echo "PM2 Reload"
-pm2 reload 1
 echo "Retsart Nginx"
 systemctl restart nginx
 
