@@ -32,6 +32,9 @@ const ProfileCard = () => {
         dispatch(checkIncompleteSetupAsync()).unwrap().then((originalPromiseResult) => {
             toast.success(`${originalPromiseResult?.message}`)
         }).catch((rejectedValueOrSerializedError) => {
+            console.log('====================================');
+            console.log(rejectedValueOrSerializedError);
+            console.log('====================================');
         });
         if (user?.stripeProfileComplete == false) {
             const response = await axiosUserInstance.get('/stripeaccountlink');
