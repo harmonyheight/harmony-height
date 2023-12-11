@@ -33,7 +33,6 @@ const ProfileCard = () => {
             toast.success(`${originalPromiseResult?.message}`)
         }).catch((rejectedValueOrSerializedError) => {
         });
-        //
         if (user?.stripeProfileComplete == false) {
             const response = await axiosUserInstance.get('/stripeaccountlink');
             window.location.href = response.data.accountLink;
