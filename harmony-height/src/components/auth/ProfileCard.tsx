@@ -33,7 +33,7 @@ const ProfileCard = () => {
             toast.success(`${originalPromiseResult?.message}`)
         }).catch((rejectedValueOrSerializedError) => {
             console.log('====================================');
-            console.log("error: ", rejectedValueOrSerializedError);
+            console.log(rejectedValueOrSerializedError)
             console.log('====================================');
         });
         if (user?.stripeProfileComplete == false) {
