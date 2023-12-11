@@ -10,7 +10,6 @@ NPM_PATH=$(which npm)
 PM2_PATH=$(which pm2)
 
 # Navigate to your project directory (replace "/path/to/your/project" with your actual project path)
-cd /path/to/your/project
 
 echo "Installing Dependencies..."
 "$NPM_PATH" install --production
