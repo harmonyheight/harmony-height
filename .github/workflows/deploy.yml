@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          script: "cd /harmony && ./.scripts/deploy.sh"
+          script: "cd /harmony/.scripts/deploy.sh"
 
       - uses: actions/checkout@v3
       - name: client Side production build build
