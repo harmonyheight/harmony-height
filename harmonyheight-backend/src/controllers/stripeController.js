@@ -143,9 +143,105 @@ const createCheckoutSession = async (req, res) => {
   }
 };
 
+const getAccountBalance = async (req, res) => {
+  try {
+    const user = Customer.findById(req.customerId);
+    const balance = await stripe.balance.retrieve({
+      stripeAccount: user.stripeAccountId,
+    });
+
+    res.json({ balance });
+  } catch (error) {
+    console.error('Error retrieving account balance:', error.message);
+    res.status(500).json({ error: 'Error retrieving account balance' });
+  }
+};
+
+// Payouts
+
+const getAccountPayouts = async (req, res) => {
+  try {
+    const user = Customer.findById(req.customerId);
+    // List all payouts for the connected account
+    const payouts = await stripe.payouts.list({
+      limit: 10,
+      stripe_account: user.stripeAccountId,
+    });
+
+    res.json(payouts);
+  } catch (error) {
+    console.error('Error listing payouts:', error.message);
+    res.status(500).json({ error: 'Error listing payouts' });
+  }
+};
+
+// balance transaction
+
+const getAccountBalanceTransactions = async (req, res) => {
+  try {
+    const user = Customer.findById(req.customerId);
+    // List all balance transactions for the connected account
+    const transactions = await stripe.balanceTransactions.list({
+      limit: 10, // Adjust the limit as needed
+      stripe_account: user.stripeAccountId,
+    });
+    res.json(transactions);
+  } catch (error) {
+    console.error('Error listing payments:', error.message);
+    res.status(500).json({ error: 'Error listing payments' });
+  }
+};
+
+// refund a payment
+const refundPayment = async (req, res) => {
+  const { paymentIntentId } = req.body;
+
+  try {
+    // Retrieve the payment intent to ensure it exists and is refundable
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+    const user = Customer.findById(req.customerId);
+    if (paymentIntent.status === 'succeeded') {
+      // Create a refund for the payment intent
+      const refund = await stripe.refunds.create({
+        payment_intent: paymentIntentId,
+        amount: paymentIntent.amount, // Amount to refund in cents
+        refund_application_fee: true, // Deduct the application fee from the connected account
+        reverse_transfer: true, // Reverse the transfer to the connected account
+        stripe_account: user.stripeAccountId, // Connected account ID
+      });
+      console.log('Refund:', refund);
+      res.status(200).json({ success: true, refund });
+    }
+  } catch (error) {
+    console.error('Error processing refund:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+// get payment_intents
+
+const getAccountPaymentsIntents = async (req, res) => {
+  try {
+    const user = Customer.findById(req.customerId);
+    // Retrieve payments received by the connected account (receiver)
+    const receiverPayments = await stripe.paymentIntents.list({
+      stripe_account: user.stripeAccountId, // Replace with the connected account ID
+    });
+
+    res.status(200).json({ receiverPayments });
+  } catch (error) {
+    console.error('Error retrieving receiver payments:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   connectStripe,
   createCheckoutSession,
   checkIncompleteSetup,
   generateStripeSetupLink,
+  getAccountBalance,
+  getAccountPayouts,
+  getAccountBalanceTransactions,
+  refundPayment,
+  getAccountPaymentsIntents,
 };
