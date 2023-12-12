@@ -8,6 +8,7 @@ const buyfilteredListing = async (req, res) => {
     // Define the filter for the query
     const filter = {
       type: 'Sell',
+      sold: false,
     };
     // Check if minPrice and maxPrice query parameters are provided
     if (req.query.minPrice && req.query.maxPrice) {

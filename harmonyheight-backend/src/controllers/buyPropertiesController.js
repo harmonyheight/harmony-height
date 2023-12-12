@@ -2,7 +2,7 @@ const Listings = require('../models/Listings');
 
 const popularListing = async (req, res) => {
   try {
-    const recentListings = await Listings.find({ type: 'Sell' })
+    const recentListings = await Listings.find({ type: 'Sell', sold: false })
       .sort({ createdAt: -1 })
       .limit(5)
       .populate('user', 'name email')
@@ -31,6 +31,7 @@ const latestListing = async (req, res) => {
     const recentListings = await Listings.find({
       createdAt: { $gte: oneWeekAgo },
       type: 'Sell',
+      sold: false,
     })
       .sort({ createdAt: -1 })
       .limit(5)

@@ -3,10 +3,11 @@ const express = require('express');
 const router = express.Router();
 const stripeController = require('../controllers/stripeController');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 const {
   authenticateToken,
 } = require('../validations/authValidationMiddleware');
+const Order = require('../models/Order');
+const Listings = require('../models/Listings');
 
 router.get('/connect', authenticateToken, stripeController.connectStripe);
 router.get(
@@ -67,7 +68,7 @@ const endpointSecret =
 router.post(
   '/webhook',
   express.raw({ type: 'application/json' }),
-  (request, response) => {
+  async (request, response) => {
     const sig = stripe.webhooks.generateTestHeaderString({
       payload: JSON.stringify(request.body),
       secret: endpointSecret,
@@ -85,12 +86,26 @@ router.post(
           console.log('====================================');
           console.log(checkoutSessionAsyncCompleted);
           console.log('====================================');
+          const { metadata, amount_total, payment_status, payment_intent } =
+            checkoutSessionAsyncCompleted;
+          const orderInstance = new Order({
+            buyer: metadata?.buyer,
+            seller: metadata?.seller,
+            listing: metadata?.listing,
+            amount_total: amount_total,
+            payment_status: payment_status,
+            paymentIntent: payment_intent,
+          });
+          // Call save on the instance
+          const savedOrder = await orderInstance.save();
+          await Listings.findByIdAndUpdate(metadata?.listing, { sold: true });
           break;
         default:
           console.log(`Unhandled event type ${event.type}`);
       }
       response.send();
     } catch (err) {
+      console.log(err);
       response.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }

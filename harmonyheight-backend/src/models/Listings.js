@@ -75,6 +75,10 @@ const listingSchema = new Schema({
       },
     },
   ],
+  sold: {
+    type: Boolean,
+    default: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

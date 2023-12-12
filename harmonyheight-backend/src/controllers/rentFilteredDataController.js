@@ -8,6 +8,7 @@ const rentfilteredListing = async (req, res) => {
     // Define the filter for the query
     const filter = {
       type: 'rent',
+      sold: false,
     };
     // Check if minPrice and maxPrice query parameters are provided
     if (req.query.minPrice && req.query.maxPrice) {

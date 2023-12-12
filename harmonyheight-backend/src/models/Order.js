@@ -18,6 +18,9 @@ const orderSchema = new Schema(
       ref: 'Listings',
       required: true,
     },
+    amount_total: {
+      type: Number,
+    },
     paymentIntent: {
       type: String, // Assuming you store the Stripe payment intent ID
       required: true,

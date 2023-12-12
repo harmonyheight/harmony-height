@@ -10,6 +10,7 @@ const latestListing = async (req, res) => {
     const recentListings = await Listings.find({
       createdAt: { $gte: oneWeekAgo },
     })
+      .where({ sold: false })
       .sort({ createdAt: -1 })
       .limit(5)
       .populate('user', 'name email')
