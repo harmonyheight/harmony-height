@@ -22,7 +22,14 @@ function formatNumberWithCommas(number: any) {
 const DetailProperty = ({ listing }: { listing: Listing }) => {
     const { user } = useAppSelector(state => state.auth)
     const handleBuyNow = async () => {
-        const response = await axiosUserInstance.get("/create-checkout-session");
+        const data = {
+            listingId: listing?._id,
+            sellerId: listing?.user?._id
+        }
+        const response = await axiosUserInstance.get("/create-checkout-session", {
+            data
+        }
+        );
         window.location.href = response.data?.url
     }
     return (
@@ -192,7 +199,6 @@ const DetailProperty = ({ listing }: { listing: Listing }) => {
                         <div className="stat-title">BUY PROPERTY NOW</div>
                         {
                             user ?
-
                                 <div className="stat-value"><button className="btn btn-wide btn-primary" onClick={handleBuyNow}>BUY NOW</button></div>
                                 :
                                 <Link className="stat-value" href="/login"><button className="btn btn-link" >Login to buy</button></Link>
