@@ -3,19 +3,25 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getUserListingTypeCountAsync } from "@/store/thunks/propertyListingThunk";
 import React from "react";
 import { MdOutlineCreditCardOff } from "react-icons/md";
-import { MdOutlineCreditScore } from "react-icons/md";
 import { BsFillHeartFill, BsFillBuildingsFill } from 'react-icons/bs'
 import { GiHouseKeys } from 'react-icons/gi'
 import axiosUserInstance from "@/store/api/axiosUserInstance";
 import { updateStripeAccount } from "@/store/reducers/userAuthSlice";
 import { toast } from "react-toastify";
+import { MdAccountBalanceWallet } from "react-icons/md";
+import { FcDebt } from "react-icons/fc";
+import { FaHandHoldingUsd } from "react-icons/fa";
 import { checkIncompleteSetupAsync, getIncompleteAccountLinkAsync } from "@/store/thunks/userAuthThunk";
+import { getStripeBalanceAsync } from "@/store/thunks/stripeThunk";
+import { formatNumberWithCommas } from "@/utils/utils";
 const ProfileCard = () => {
     const { user } = useAppSelector(state => state.auth)
+    const { balance } = useAppSelector(state => state.stripe)
     const { userListingTypeCount, loading } = useAppSelector(state => state.userlistings)
     const dispatch = useAppDispatch();
     React.useEffect(() => {
         dispatch(getUserListingTypeCountAsync())
+        dispatch(getStripeBalanceAsync())
     }, [dispatch])
     const handleConnect = async () => {
         try {
@@ -87,6 +93,54 @@ const ProfileCard = () => {
                     }
                 </div>
             </div>
+            {
+                user?.stripeProfileComplete && <React.Fragment>
+
+                    <span className="text-xl font-bold mt-2 italic">STRIPE PAYMENT DETAILS</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
+                        <div className="stats shadow bg-blue-300">
+                            <div className="stat">
+                                <div className="stat-figure text-accent text-5xl">
+                                    <MdAccountBalanceWallet />
+                                </div>
+                                <div className="stat-title">Available Balance</div>
+                                <div className="stat-value">{balance?.available[0].amount / 100}</div>
+                                <div className="stat-desc">Currency USD</div>
+                            </div>
+                        </div>
+                        <div className="stats shadow bg-yellow-100 text-neutral">
+                            <div className="stat text-accent">
+                                <div className="stat-figure text-accent text-5xl">
+                                    <FcDebt />
+                                </div>
+
+                                <div className="stat-title text-accent">Pending Balance</div>
+                                {
+                                    loading ? <span className="loading loading-dots loading-md"></span> :
+                                        <div className="stat-value text-accent">{formatNumberWithCommas(balance?.pending[0].amount / 100)}</div>
+                                }
+                                <div className="stat-desc text-accent">Currency: USD</div>
+                            </div>
+                        </div>
+                        <div className="stats shadow bg-neutral-300 text-neutral">
+                            <div className="stat text-accent">
+                                <div className="stat-figure text-accent text-5xl">
+                                    <FaHandHoldingUsd />
+                                </div>
+
+                                <div className="stat-title text-accent">Connected Reserved</div>
+                                {
+                                    loading ? <span className="loading loading-dots loading-md"></span> :
+                                        <div className="stat-value text-accent">{formatNumberWithCommas(balance?.connect_reserved[0].amount / 100)}</div>
+                                }
+                                <div className="stat-desc text-accent">Currency: USD</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </React.Fragment>
+            }
+            <span className="text-xl font-bold mt-2 italic">USER LISTING DETAILS</span>
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 mt-4">
                 <div className="stats shadow bg-orange-300">
                     <div className="stat">

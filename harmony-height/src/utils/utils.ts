@@ -25,3 +25,7 @@ export function encrypt(password: string) {
 export function decrypt(password: string) {
   return cryptr.decrypt(password);
 }
+
+export function formatNumberWithCommas(number: any) {
+  return number.toLocaleString('en-US', { style: 'decimal' });
+}

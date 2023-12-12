@@ -8,6 +8,7 @@ import homeListingSlice from './reducers/homeListingSlice'
 import buyListingSlice from './reducers/buyListingSlice'
 import buyFilterSlice from './reducers/buyFilterSlice'
 import rentingListingSlice from './reducers/rentingListingSlice'
+import stripeSlice from './reducers/stripeSlice'
 const store = configureStore({
     reducer: {
         auth: userAuthSlice,
@@ -16,6 +17,7 @@ const store = configureStore({
         buylisting: buyListingSlice,
         buyfilterlisting: buyFilterSlice,
         rentlisting: rentingListingSlice,
+        stripe: stripeSlice,
 
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat(thunk),
