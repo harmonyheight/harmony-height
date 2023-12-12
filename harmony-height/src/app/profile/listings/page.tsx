@@ -1,5 +1,6 @@
 "use client"
 import { TableListings } from "@/components/auth/TableListings";
+import withAuth from "@/components/auth/withAuth";
 import React from "react";
 
 const ListingsPage = () => {
@@ -8,4 +9,4 @@ const ListingsPage = () => {
     </div>;
 };
 
-export default ListingsPage;
+export default withAuth(ListingsPage);

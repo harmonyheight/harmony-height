@@ -8,6 +8,7 @@ import { TbBrandGoogleAnalytics } from 'react-icons/tb'
 import { FiSettings } from 'react-icons/fi'
 import { BiLogOutCircle } from 'react-icons/bi'
 import { useAppDispatch } from "@/store/hooks";
+import { MdRealEstateAgent } from "react-icons/md";
 import { logout } from "@/store/reducers/userAuthSlice";
 const SideBar = forwardRef((props, ref) => {
     const router = useRouter();
@@ -71,6 +72,21 @@ const SideBar = forwardRef((props, ref) => {
                         </div>
                         <div>
                             <p>Listings</p>
+                        </div>
+                    </div>
+                </Link>
+                <Link href="/profile/orders">
+                    <div
+                        className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${pathname == "/profile/orders"
+                            ? "bg-primary text-white"
+                            : "text-black hover:bg-primary hover:text-white"
+                            }`}
+                    >
+                        <div className="mr-2">
+                            <MdRealEstateAgent className="h-5 w-5" />
+                        </div>
+                        <div>
+                            <p>Orders</p>
                         </div>
                     </div>
                 </Link>

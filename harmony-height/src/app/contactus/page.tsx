@@ -4,6 +4,7 @@ import React from "react";
 const ContactusPage = () => {
     return <div>
         <NavBar />
+
     </div>;
 };
 
