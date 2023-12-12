@@ -13,12 +13,18 @@ import { CiWifiOn, CiWifiOff } from "react-icons/ci";
 import React from "react";
 import { GoPeople } from "react-icons/go";
 import { useAppSelector } from "@/store/hooks";
+import axiosUserInstance from "@/store/api/axiosUserInstance";
+import Link from "next/link";
 function formatNumberWithCommas(number: any) {
     return number.toLocaleString('en-US', { style: 'decimal' });
 }
 
 const DetailProperty = ({ listing }: { listing: Listing }) => {
     const { user } = useAppSelector(state => state.auth)
+    const handleBuyNow = async () => {
+        const response = await axiosUserInstance.get("/create-checkout-session");
+        window.location.href = response.data?.url
+    }
     return (
         <div className="flex flex-col">
 
@@ -184,7 +190,13 @@ const DetailProperty = ({ listing }: { listing: Listing }) => {
                             <CiCreditCard1 className="text-6xl" />
                         </div>
                         <div className="stat-title">BUY PROPERTY NOW</div>
-                        <div className="stat-value"><button className="btn btn-wide btn-primary" >BUY NOW</button></div>
+                        {
+                            user ?
+
+                                <div className="stat-value"><button className="btn btn-wide btn-primary" onClick={handleBuyNow}>BUY NOW</button></div>
+                                :
+                                <Link className="stat-value" href="/login"><button className="btn btn-link" >Login to buy</button></Link>
+                        }
                     </div>
                 </div>
             </div>
