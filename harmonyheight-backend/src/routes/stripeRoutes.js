@@ -20,7 +20,7 @@ router.get(
   stripeController.generateStripeSetupLink,
 );
 //'/create-checkout-session'
-router.get(
+router.post(
   '/create-checkout-session',
   authenticateToken,
   stripeController.createCheckoutSession,

@@ -15,6 +15,8 @@ import { GoPeople } from "react-icons/go";
 import { useAppSelector } from "@/store/hooks";
 import axiosUserInstance from "@/store/api/axiosUserInstance";
 import Link from "next/link";
+import { AxiosRequestConfig } from 'axios';
+
 function formatNumberWithCommas(number: any) {
     return number.toLocaleString('en-US', { style: 'decimal' });
 }
@@ -22,14 +24,11 @@ function formatNumberWithCommas(number: any) {
 const DetailProperty = ({ listing }: { listing: Listing }) => {
     const { user } = useAppSelector(state => state.auth)
     const handleBuyNow = async () => {
-        const data = {
+
+        const response = await axiosUserInstance.post("/create-checkout-session", {
             listingId: listing?._id,
             sellerId: listing?.user?._id
-        }
-        const response = await axiosUserInstance.get("/create-checkout-session", {
-            data
-        }
-        );
+        });
         window.location.href = response.data?.url
     }
     return (
