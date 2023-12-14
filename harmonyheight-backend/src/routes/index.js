@@ -4,6 +4,7 @@ const homeRoutes = require('./homeRoutes');
 const buyRoutes = require('./buyRoutes');
 const rentRoutes = require('./rentRoutes');
 const stripeRoutes = require('./stripeRoutes');
+const orderRoutes = require('./orderRoutes');
 module.exports = {
   authenticationRoutes,
   propertyListingRoutes,
@@ -11,4 +12,5 @@ module.exports = {
   buyRoutes,
   rentRoutes,
   stripeRoutes,
+  orderRoutes,
 };

@@ -17,10 +17,10 @@ const Propular = () => {
     return <div>
         <div className="pl-7 pt-10">
             <div className="border-l-4 border-primary">
-                <h3 className="text-xl font-semibold uppercase pl-2">Popular Properties</h3>
+                <h3 className="text-xl font-semibold uppercase pl-2">Experience the Pinnacle of Luxury Living</h3>
             </div>
             <div className="text-base w-[95%] p-4 justify-center items-center text-center flex pt-3 italic">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mollis, lorem at iaculis porttitor, velit enim luctus tellus, id porta elit augue non augue. Praesent efficitur gravida lectus, vitae euismod.</div>
+                Indulge in the pinnacle of luxury living with our popular properties. From breathtaking views to state-of-the-art amenities, these homes embody the epitome of elegance and sophistication.</div>
         </div>
         <div className="flex flex-row carousel mx-4">
             {

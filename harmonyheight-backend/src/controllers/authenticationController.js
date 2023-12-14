@@ -52,9 +52,6 @@ exports.login = async (req, res) => {
         email: customer.email,
       },
       process.env.SECRET_JWT_KEY,
-      {
-        expiresIn: '1d',
-      },
     );
     const keysToDelete = ['password', 'verificationCode', 'isAdmin', '__v'];
     keysToDelete.forEach((key) => {

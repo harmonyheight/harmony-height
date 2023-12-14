@@ -90,7 +90,7 @@ const SideBar = forwardRef((props, ref) => {
                         </div>
                     </div>
                 </Link>
-                <Link href="/profile/settings">
+                {/* <Link href="/profile/settings">
                     <div
                         className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${pathname == "/profile/settings"
                             ? "bg-primary text-white"
@@ -104,7 +104,7 @@ const SideBar = forwardRef((props, ref) => {
                             <p>Settings</p>
                         </div>
                     </div>
-                </Link>
+                </Link> */}
                 <Link href="/" onClick={() => dispatch(logout())}>
                     <div
                         className="pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors 

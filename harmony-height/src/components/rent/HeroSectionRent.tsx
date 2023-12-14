@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const HeroSectionRent = () => {
@@ -16,9 +17,9 @@ const HeroSectionRent = () => {
         </div>
         <div className="text-center lg:text-left ">
           <center>
-            <h1 className="text-5xl font-bold">Rented Properties</h1>
-            <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-            <button className="btn btn-primary my-4 px-3">EXPLORE</button>
+            <h1 className="text-5xl font-bold">Exclusive Rental Opportunities</h1>
+            <p className="py-6">Embark on a journey to uncover exclusive rental opportunities that cater to your unique lifestyle. From chic urban apartments to cozy suburban retreats, our listings showcase a diverse range of homes designed for modern living</p>
+            <Link href="/rent/all" className="btn btn-primary my-4 px-3">EXPLORE</Link>
           </center>
         </div>
       </div>

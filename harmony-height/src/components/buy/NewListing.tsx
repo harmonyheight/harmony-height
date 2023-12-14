@@ -16,10 +16,10 @@ const NewListing = () => {
     return <div>
         <div className="px-7 pt-10">
             <div className="border-l-4 border-primary">
-                <h3 className="text-xl font-semibold uppercase pl-2">New Listed Properties</h3>
+                <h3 className="text-xl font-semibold uppercase pl-2">Trendsetting Designs, Timeless Appeal</h3>
             </div>
             <div className="text-base w-[95%] p-4 justify-center items-center text-center flex pt-3 italic">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mollis, lorem at iaculis porttitor, velit enim luctus tellus, id porta elit augue non augue. Praesent efficitur gravida lectus, vitae euismod.</div>
+                Witness trendsetting designs with timeless appeal in our newly listed properties. Each home is a showcase of architectural brilliance and interior sophistication, setting the standard for modern, stylish living.</div>
 
         </div>
 

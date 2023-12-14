@@ -33,7 +33,7 @@ const NavBar = () => {
                         </li>
                         {/* mortgage */}
                         <li className={`${pathname == "/mortgage" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/mortgage">Mortgage</Link></li>
-                        <li className={`${pathname == "/contactus" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/contactus">Contact Us</Link></li>
+                        <li className={`${pathname == "/aboutus" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/aboutus">About Us</Link></li>
                     </ul>
                 </div>
                 <a className="btn btn-ghost normal-case text-xl" onClick={() => push('/')}>Harmony Height</a>
@@ -52,7 +52,7 @@ const NavBar = () => {
                         </details>
                     </li>
                     <li className={`${pathname == "/mortgage" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/mortgage">Mortgage</Link></li>
-                    <li className={`${pathname == "/contactus" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/contactus">Contact Us</Link></li>
+                    <li className={`${pathname == "/aboutus" ? "bg-primary rounded-md  text-white" : ""}`} ><Link href="/aboutus">About Us</Link></li>
                 </ul>
             </div>
             <div className="navbar-end">

@@ -46,6 +46,7 @@ export const TableListings = () => {
     const { push } = useRouter();
     const dispatch = useAppDispatch();
     const { userListings, loading } = useAppSelector(state => state.userlistings);
+    const { user } = useAppSelector(state => state.auth)
     const [currentPage, setCurrentPage] = React.useState(1);
     const [itemsPerPage, setItemsPerPage] = React.useState(3); // Number of items per page
 
@@ -60,7 +61,10 @@ export const TableListings = () => {
         <div className="mb-4 flex items-center justify-between">
 
             <span className="uppercase font-semibold text-xl">PROPERTIES LISTING</span>
-            <div className="btn btn-primary" onClick={() => push("/profile/listings/new")}>ADD NEW</div>
+            {
+                user?.stripeProfileComplete ? <div className="btn btn-primary" onClick={() => push("/profile/listings/new")}>ADD NEW</div> :
+                    <div className="btn btn-link" onClick={() => push("/profile")}>PLEASE ENABLE PAYMENT</div>
+            }
         </div>
         <div className="overflow-x-auto">
             <table className="table table-pin-cols table-lg">

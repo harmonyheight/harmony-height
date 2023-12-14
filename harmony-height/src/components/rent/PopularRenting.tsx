@@ -15,10 +15,10 @@ const PopularRenting = () => {
 
         <div className="pl-7 pt-10">
             <div className="border-l-4 border-primary">
-                <h3 className="text-xl font-semibold uppercase pl-2">Popular Properties</h3>
+                <h3 className="text-xl font-semibold uppercase pl-2">Seamless Online Rental Experience</h3>
             </div>
             <div className="text-base w-[95%] p-4 justify-center items-center text-center flex pt-3 italic">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mollis, lorem at iaculis porttitor, velit enim luctus tellus, id porta elit augue non augue. Praesent efficitur gravida lectus, vitae euismod.</div>
+                Our popular rental properties are strategically located in prime areas, offering unparalleled convenience and accessibility. Enjoy proximity to essential amenities, entertainment hubs, and public transportation, making daily life more comfortable and enjoyable.</div>
         </div>
         <div className="flex flex-row carousel mx-4">
             {

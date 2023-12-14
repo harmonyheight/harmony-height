@@ -86,7 +86,7 @@ function Form() {
                         required={true}
                     />
                     <FormInputGroup
-                        text="Loan Duration (years)"
+                        text="Interest Percent (%)"
                         placeholder={"Enter the duration of your loan in years"}
                         value={loanDuration}
                         onInput={(e) => setLoanDuration(e.target.value)}
@@ -159,7 +159,7 @@ function Form() {
                 </div>
                 <div className="my-4">
                     <div className="stat">
-                        <div className="stat-title">Down Payment</div>
+                        <div className="stat-title">Loan Amount</div>
                         <div className="stat-value text-lg">${loanAmount ? loanAmount : 0}</div>
                     </div>
                     {

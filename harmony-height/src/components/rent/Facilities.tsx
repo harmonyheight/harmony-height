@@ -4,10 +4,12 @@ const Facilities = () => {
     return (
         <div className="overflow-hidden pl-7 pt-10 min-w-screen flex flex-col">
             <div className="border-l-4 border-primary">
-                <h3 className="text-xl font-semibold uppercase pl-2">Facilities</h3>
+                <h3 className="text-xl font-semibold uppercase pl-2">Facilities Tailored to Every Lifestyle</h3>
             </div>
             <div className="text-base w-[95%] p-4 justify-center items-center text-center flex pt-3 italic">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mollis, lorem at iaculis porttitor, velit enim luctus tellus, id porta elit augue non augue. Praesent efficitur gravida lectus, vitae euismod.</div>
+                Unwind, connect, and thrive in an environment where the best facilities await. Elevate your living experience with  Harmony Height where every property is designed to exceed your expectations.
+
+            </div>
 
             <ul className="timeline timeline-vertical">
                 <li>

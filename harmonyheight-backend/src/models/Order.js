@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const mongoosePaginate = require('mongoose-paginate-v2');
 const orderSchema = new Schema(
   {
     buyer: {
@@ -42,6 +42,8 @@ const orderSchema = new Schema(
     timestamps: true,
   },
 );
+// Apply the mongoose-paginate-v2 plugin to the orderSchema
+orderSchema.plugin(mongoosePaginate);
 
 const Order = mongoose.model('Order', orderSchema);
 
