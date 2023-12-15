@@ -54,7 +54,9 @@ const LoginPage = () => {
                                     <div className="indicator mt-5">
                                         <span className="indicator-item badge bg-red-600 text-white">Required</span>
                                         <input type="text" placeholder="Enter email address" className="input input-bordered" {...register('email', { required: 'Email is required' })} />
+
                                     </div>
+
                                     {errors.email && <span className="text-red-600">{errors.email.message}</span>}
 
                                     <div className="indicator  mt-5">

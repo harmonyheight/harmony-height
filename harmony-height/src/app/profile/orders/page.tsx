@@ -22,7 +22,7 @@ const OrdersPage = () => {
             <div className="stats ">
 
                 <div className="stat place-items-center">
-                    <div className="stat-title">Total Sold</div>
+                    <div className="stat-title">Total {tab == "sold" ? "Sold" : "Purchased"}</div>
                     <div className="stat-value">{pagination.totalDocs}</div>
                 </div>
             </div>
