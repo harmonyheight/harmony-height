@@ -6,7 +6,7 @@ export const getSellerOrdersAsync = createAsyncThunk('orders/getSellerOrders',
         page: number, pageSize: number, type: string
     }, { rejectWithValue }) => {
         try {
-            const response = await axiosUserInstance.get(`/orders/sold?page=${credientials.page}&pageSize=${credientials.pageSize}`);
+            const response = await axiosUserInstance.get(`/orders/sold?page=${credientials.page}&pageSize=${credientials.pageSize}&type=${credientials.type}`);
             return {
                 orders: response.data?.docs,
                 pagination: {
