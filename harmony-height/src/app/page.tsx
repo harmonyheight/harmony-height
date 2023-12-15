@@ -10,7 +10,7 @@ export default function Home() {
 
     <main className='w-full  flex h-screen flex-col'>
       <NavBar />
-      <Banner />
+      {/* <Banner /> */}
       <TabSection />
       <Slider />
       <Statistic />

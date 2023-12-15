@@ -70,3 +70,15 @@ export interface PaginatedOrderResponse {
     prevPage: null | number;
     nextPage: null | number;
 }
+
+export interface PaginationInfo {
+    totalDocs: number;
+    limit: number;
+    totalPages: number;
+    page: number;
+    pagingCounter: number;
+    hasPrevPage: boolean;
+    hasNextPage: boolean;
+    prevPage: null | number;
+    nextPage: null | number;
+}

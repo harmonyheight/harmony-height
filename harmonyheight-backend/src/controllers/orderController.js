@@ -6,6 +6,7 @@ const getAllSoldListingOrders = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 10;
+    const type = req.query.type;
 
     const options = {
       page,
@@ -13,7 +14,14 @@ const getAllSoldListingOrders = async (req, res) => {
       sort: { createdAt: 'desc' }, // Sort by createdAt in descending order
     };
 
-    const query = { seller: req.customerId };
+    let query;
+    if (type == 'sold') {
+      query = { seller: req.customerId };
+    } else {
+      if (type == 'purchased') {
+        query = { buyer: req.customerId };
+      }
+    }
 
     const orders = await Order.paginate(query, options);
 
