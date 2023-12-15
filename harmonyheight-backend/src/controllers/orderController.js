@@ -6,8 +6,8 @@ const getAllSoldListingOrders = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 10;
-    const type = req.query.type;
-
+    let type = req.query.type;
+    type = type.replace(/^"(.*)"$/, '$1');
     const options = {
       page,
       limit: pageSize,
@@ -15,12 +15,13 @@ const getAllSoldListingOrders = async (req, res) => {
     };
 
     let query;
-    if (type == 'sold') {
+    if (type === 'sold') {
       query = { seller: req.customerId };
+    } else if (type === 'purchased') {
+      query = { buyer: req.customerId };
     } else {
-      if (type == 'purchased') {
-        query = { buyer: req.customerId };
-      }
+      // Handle other types or set a default query if needed
+      query = {};
     }
 
     const orders = await Order.paginate(query, options);
