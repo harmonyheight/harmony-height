@@ -86,7 +86,7 @@ function Form() {
                         required={true}
                     />
                     <FormInputGroup
-                        text="Interest Percent (%)"
+                        text="Loan Duration"
                         placeholder={"Enter the duration of your loan in years"}
                         value={loanDuration}
                         onInput={(e) => setLoanDuration(e.target.value)}
